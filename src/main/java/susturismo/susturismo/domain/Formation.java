@@ -1,14 +1,12 @@
 package susturismo.susturismo.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 
 import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "formation")
 @Table(name = "formation")
-@EqualsAndHashCode(of="id")
 public class Formation extends BaseTable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

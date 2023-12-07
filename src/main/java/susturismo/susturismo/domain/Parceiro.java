@@ -1,13 +1,11 @@
 package susturismo.susturismo.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 @Entity(name = "parceiros")
 @Table(name = "parceiros")
-@EqualsAndHashCode(of="id")
 public class Parceiro extends BaseTable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

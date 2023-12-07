@@ -1,7 +1,6 @@
 package susturismo.susturismo.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -9,7 +8,6 @@ import java.util.UUID;
 
 @Entity(name = "events")
 @Table(name = "events")
-@EqualsAndHashCode(of="id")
 public class Event extends BaseTable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -1,18 +1,12 @@
 package susturismo.susturismo.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "portfolio")
 @Table(name = "portfolio")
-@Getter
-@Setter
-@EqualsAndHashCode(of="id")
 public class Portfolio extends BaseTable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

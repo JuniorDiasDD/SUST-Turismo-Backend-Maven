@@ -1,14 +1,12 @@
 package susturismo.susturismo.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 
 import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "feed")
 @Table(name = "feed")
-@EqualsAndHashCode(of="id")
 public class Feed extends BaseTable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -1,18 +1,10 @@
 package susturismo.susturismo.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "roles")
 @Table(name = "roles")
-@Getter
-@Setter
-@EqualsAndHashCode(of="id")
 public class Role extends BaseTable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

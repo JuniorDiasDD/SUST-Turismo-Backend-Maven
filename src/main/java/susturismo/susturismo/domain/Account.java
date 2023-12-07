@@ -1,16 +1,12 @@
 package susturismo.susturismo.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "account")
 @Table(name = "account")
-@EqualsAndHashCode(of="id")
 public class Account{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

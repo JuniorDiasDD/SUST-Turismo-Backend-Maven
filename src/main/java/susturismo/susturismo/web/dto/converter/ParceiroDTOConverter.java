@@ -17,11 +17,9 @@ public class ParceiroDTOConverter {
         dto.setDescription(parceiro.getDescription());
         dto.setStatus(parceiro.getStatus());
         dto.setName(parceiro.getName());
-
-
+        dto.setImage(parceiro.getImage());
 
         return dto;
-
     }
 
     public Parceiro convertToEntity(ParceiroDTO dto) {
@@ -30,9 +28,8 @@ public class ParceiroDTOConverter {
         objt.setId(dto.getId());
         objt.setDescription(dto.getDescription());
         objt.setStatus(dto.getStatus());
-
         objt.setName(dto.getName());
-
+        objt.setImage(dto.getImage());
         return objt;
 
     }

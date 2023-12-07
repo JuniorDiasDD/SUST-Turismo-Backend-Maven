@@ -54,6 +54,9 @@ public class ParceiroService {
         if(parceiro.getDescription()!=null){
             optionalParceiro.get().setDescription(parceiro.getDescription());
         }
+        if(parceiro.getImage()!=null){
+            optionalParceiro.get().setImage(parceiro.getImage());
+        }
 
         String userName=SecurityContextHolder.getContext().getAuthentication().getName();
         UUID id= userRepository.findByUsername(userName).get().getId();

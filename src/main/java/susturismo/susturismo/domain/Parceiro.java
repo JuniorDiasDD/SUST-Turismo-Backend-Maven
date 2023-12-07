@@ -23,6 +23,10 @@ public class Parceiro extends BaseTable{
     @Column(name = "STATUS", length = 254)
     private String status;
 
+
+    @Column(name = "IMAGE")
+    private String image;
+
     public UUID getId() {
         return id;
     }
@@ -53,5 +57,13 @@ public class Parceiro extends BaseTable{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

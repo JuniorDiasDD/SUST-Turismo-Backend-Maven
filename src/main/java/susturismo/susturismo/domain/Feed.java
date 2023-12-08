@@ -13,23 +13,13 @@ public class Feed extends BaseTable{
     @Column(name = "ID", nullable = false)
     private UUID id;
 
-    @Basic(optional = false)
-    @Column(name = "TITLE", length = 254)
-    private String title;
-
     @Column(name = "DESCRIPTION", columnDefinition="TEXT")
     private String description;
-
+    @Column(name = "IMAGE", columnDefinition = "TEXT")
+    private String image;
     @Basic(optional = false)
     @Column(name = "STATUS", length = 254)
     private String status;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinTable(
-            name = "FEED_CATEGORY",
-            joinColumns = @JoinColumn(name = "feed_id", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "ID"))
-    private Set<Category> category;
 
     @Transient
     Account account;
@@ -39,14 +29,6 @@ public class Feed extends BaseTable{
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
@@ -73,11 +55,11 @@ public class Feed extends BaseTable{
         this.account = account;
     }
 
-    public Set<Category> getCategory() {
-        return category;
+    public String getImage() {
+        return image;
     }
 
-    public void setCategory(Set<Category> category) {
-        this.category = category;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

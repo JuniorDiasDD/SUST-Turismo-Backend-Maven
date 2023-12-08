@@ -25,11 +25,8 @@ public class FeedDTOConverter {
         dto.setId(feed.getId());
         dto.setDescription(feed.getDescription());
         dto.setStatus(feed.getStatus());
-        dto.setTitle(feed.getTitle());
-        if(!feed.getCategory().isEmpty()) {
-            Set<CategoryDTO> categoryDTOS = feed.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
-            dto.setCategories(categoryDTOS);
-        }
+        dto.setImage(feed.getImage());
+
         AccountDTO accountDTO=accountDTOConverter.convertToDTO(feed.getAccount());
         dto.setAccount(accountDTO);
         return dto;
@@ -42,12 +39,7 @@ public class FeedDTOConverter {
         objt.setId(dto.getId());
         objt.setDescription(dto.getDescription());
         objt.setStatus(dto.getStatus());
-        objt.setTitle(dto.getTitle());
-
-        if(dto.getCategories()!=null && !dto.getCategories().isEmpty()){
-            Set<Category> categories = dto.getCategories().stream().map(categoryDTOConverter::convertToEntity).collect(Collectors.toSet());
-            objt.setCategory(categories);
-        }
+        objt.setImage(dto.getImage());
 
         return objt;
 

@@ -1,10 +1,9 @@
 package susturismo.susturismo.service;
 
 import susturismo.susturismo.domain.Account;
-import susturismo.susturismo.domain.Category;
 import susturismo.susturismo.domain.Feed;
+import susturismo.susturismo.domain.Noticia;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
-import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.repository.AccountRepository;
 import susturismo.susturismo.repository.CategoryRepository;
@@ -24,8 +23,6 @@ public class FeedService {
     FeedRepository feedRepository;
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    CategoryRepository categoryRepository;
     @Autowired
     AccountRepository accountRepository;
 
@@ -50,15 +47,6 @@ public class FeedService {
         return list;
     }
     public Feed insert(Feed feed){
-        if(feedRepository.findByTitle(feed.getTitle()).isPresent()){
-            throw new HttpInsertFailedException("This Feed already exists");
-        }
-        feed.getCategory().forEach(v->{
-            Optional<Category> category=categoryRepository.findById(v.getId());
-            if(category.isEmpty()){
-                throw new HttpElementNotFoundExeption("Category: "+v.getId()+" not exist");
-            }
-        });
         String userName=SecurityContextHolder.getContext().getAuthentication().getName();
         UUID id= userRepository.findByUsername(userName).get().getId();
         feed.setCriadoPor(id);
@@ -72,26 +60,13 @@ public class FeedService {
         if(optionalFeed.isEmpty()){
             throw new HttpUpdateFailedException("Not exist this Feed");
         }
-        if(feed.getCategory()!=null && !feed.getCategory().isEmpty()){
-            feed.getCategory().forEach(v->{
-                Optional<Category> category=categoryRepository.findById(v.getId());
-                if(category.isEmpty()){
-                    throw new HttpElementNotFoundExeption("Category: "+v.getId()+" not exist");
-                }
 
-                if(!optionalFeed.get().getCategory().contains(category.get())){
-                    optionalFeed.get().getCategory().add(category.get());
-                }
-
-            });
-        }
-        if(feed.getTitle()!=null){
-            optionalFeed.get().setTitle(feed.getTitle());
-        }
         if(feed.getDescription()!=null){
             optionalFeed.get().setDescription(feed.getDescription());
         }
-
+        if(feed.getImage()!=null){
+            optionalFeed.get().setImage(feed.getImage());
+        }
         String userName=SecurityContextHolder.getContext().getAuthentication().getName();
         UUID id= userRepository.findByUsername(userName).get().getId();
         optionalFeed.get().setAlteradoPor(id);
@@ -116,7 +91,17 @@ public class FeedService {
     }
 
     public Optional<Feed> findById(UUID id){
-        return feedRepository.findById(id);
+        Optional<Feed>feed= feedRepository.findById(id);
+        Optional<Account>optional=accountRepository.findAccountByAuth(feed.get().getCriadoPor());
+        optional.ifPresent(feed.get()::setAccount);
+        return feed;
     }
-
+    public boolean delete(UUID id){
+        Optional<Feed> feed=feedRepository.findById(id);
+        if(feed.isPresent()){
+            feedRepository.delete(feed.get());
+            return true;
+        }
+        return false;
+    }
 }

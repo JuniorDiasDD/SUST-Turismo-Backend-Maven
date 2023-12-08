@@ -5,11 +5,11 @@ import java.util.UUID;
 public class FeedDTO {
 
     private UUID id;
-    private String title;
+    private String image;
     private String description;
     private String status;
     private AccountDTO account;
-    Set<CategoryDTO> categories;
+
 
     public UUID getId() {
         return id;
@@ -35,12 +35,12 @@ public class FeedDTO {
         this.status = status;
     }
 
-    public String getTitle() {
-        return title;
+    public String getImage() {
+        return image;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public AccountDTO getAccount() {
@@ -51,11 +51,4 @@ public class FeedDTO {
         this.account = account;
     }
 
-    public Set<CategoryDTO> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<CategoryDTO> categories) {
-        this.categories = categories;
-    }
 }

@@ -15,6 +15,4 @@ import java.util.UUID;
 public interface FeedRepository extends JpaRepository<Feed, UUID> {
     @Query("select up from feed up where up.status = :status")
     List<Feed> findAllFeedStatus(@Param("status") String status);
-    Optional<Feed> findByTitle(String title);
-
 }

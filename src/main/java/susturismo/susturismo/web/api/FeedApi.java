@@ -2,6 +2,7 @@ package susturismo.susturismo.web.api;
 
 
 import susturismo.susturismo.web.dto.FeedDTO;
+import susturismo.susturismo.web.dto.NoticiaDTO;
 import susturismo.susturismo.web.dto.webBody.requests.RequestDTO;
 import susturismo.susturismo.web.dto.webBody.requests.RequestDTOList;
 import susturismo.susturismo.web.dto.webBody.responses.ResponseDTO;
@@ -31,10 +32,14 @@ public interface FeedApi {
     ResponseEntity<Object> active(@RequestBody(required = false) RequestDTOList<UUID> request);
     @PostMapping(path = "/disable")
     ResponseEntity<Object> disable(@RequestBody(required = false) RequestDTOList<UUID> request);
-
-
+    
     @GetMapping(path = "/{id}")
     ResponseEntity<ResponseDTO<FeedDTO>> findByID(
+            @PathVariable(value = "id") UUID id,
+            @RequestBody(required = false) RequestDTO<FeedDTO> request);
+
+    @DeleteMapping(path = "/{id}")
+    ResponseEntity<ResponseDTO<FeedDTO>> delete(
             @PathVariable(value = "id") UUID id,
             @RequestBody(required = false) RequestDTO<FeedDTO> request);
 }

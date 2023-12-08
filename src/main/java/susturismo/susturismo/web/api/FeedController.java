@@ -1,11 +1,13 @@
 package susturismo.susturismo.web.api;
 
 import susturismo.susturismo.domain.Feed;
+import susturismo.susturismo.domain.Noticia;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.service.FeedService;
 import susturismo.susturismo.web.dto.FeedDTO;
+import susturismo.susturismo.web.dto.NoticiaDTO;
 import susturismo.susturismo.web.dto.converter.FeedDTOConverter;
 import susturismo.susturismo.web.dto.converter.responsesConverters.ResponseDTOConverter;
 import susturismo.susturismo.web.dto.webBody.requests.RequestDTO;
@@ -137,6 +139,21 @@ public class FeedController implements FeedApi{
         response = responseDTOConverter.createResponse(request, dto, "Search By Id", true);
 
 
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+    @Override
+    public ResponseEntity<ResponseDTO<FeedDTO>> delete(UUID id, RequestDTO<FeedDTO> request) {
+        FeedDTO dto = null;
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTO<FeedDTO> response;
+        Optional<Feed> feed = feedService.findById(id);
+        if (feed.isPresent()) {
+            feedService.delete(id);
+
+        }else{
+            throw new HttpElementNotFoundExeption("Feed not exist by ID: "+id);
+        }
+        response = responseDTOConverter.createResponse(request, dto, "Search By Id", true);
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 }

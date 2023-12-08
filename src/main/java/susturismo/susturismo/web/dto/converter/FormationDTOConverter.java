@@ -26,6 +26,8 @@ public class FormationDTOConverter {
         dto.setTitle(formation.getTitle());
         dto.setObjective(formation.getObjective());
         dto.setResponsible(formation.getResponsible());
+        dto.setLink(formation.getLink());
+        dto.setImage(formation.getImage());
         if(!formation.getCategory().isEmpty()) {
             Set<CategoryDTO> categoryDTOS = formation.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
             dto.setCategories(categoryDTOS);
@@ -44,6 +46,8 @@ public class FormationDTOConverter {
         objt.setTitle(dto.getTitle());
         objt.setObjective(dto.getObjective());
         objt.setResponsible(dto.getResponsible());
+        objt.setLink(dto.getLink());
+        objt.setImage(dto.getImage());
 
         if(dto.getCategories()!=null && !dto.getCategories().isEmpty()){
             Set<Category> categories = dto.getCategories().stream().map(categoryDTOConverter::convertToEntity).collect(Collectors.toSet());

@@ -82,7 +82,12 @@ public class FormationService {
         if(formation.getResponsible()!=null){
             optionalFormation.get().setResponsible(formation.getResponsible());
         }
-
+        if(formation.getLink()!=null){
+            optionalFormation.get().setLink(formation.getLink());
+        }
+        if(formation.getImage()!=null){
+            optionalFormation.get().setImage(formation.getImage());
+        }
         String userName=SecurityContextHolder.getContext().getAuthentication().getName();
         UUID id= userRepository.findByUsername(userName).get().getId();
         optionalFormation.get().setAlteradoPor(id);

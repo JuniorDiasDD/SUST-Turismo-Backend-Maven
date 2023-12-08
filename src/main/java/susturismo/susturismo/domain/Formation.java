@@ -31,6 +31,11 @@ public class Formation extends BaseTable{
     @Column(name = "STATUS", length = 254)
     private String status;
 
+    @Column(name = "LINK", length = 254)
+    private String link;
+    @Column(name = "IMAGE")
+    private String image;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "FORMATION_CATEGORY",
@@ -92,5 +97,21 @@ public class Formation extends BaseTable{
 
     public void setCategory(Set<Category> category) {
         this.category = category;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

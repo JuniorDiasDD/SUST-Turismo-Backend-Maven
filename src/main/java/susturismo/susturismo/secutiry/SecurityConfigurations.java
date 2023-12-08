@@ -1,4 +1,4 @@
-package susturismo.susturismo.auth.secutiry;
+package susturismo.susturismo.secutiry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +27,11 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/category/all").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/event").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/feed").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/formation").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/parceiro").permitAll()
                         //.requestMatchers(HttpMethod.POST,"/events").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

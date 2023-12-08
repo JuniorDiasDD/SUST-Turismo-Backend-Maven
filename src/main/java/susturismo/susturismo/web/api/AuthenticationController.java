@@ -1,7 +1,7 @@
 package susturismo.susturismo.web.api;
 
 
-import susturismo.susturismo.auth.secutiry.TokenService;
+import susturismo.susturismo.secutiry.TokenService;
 import susturismo.susturismo.domain.User;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;

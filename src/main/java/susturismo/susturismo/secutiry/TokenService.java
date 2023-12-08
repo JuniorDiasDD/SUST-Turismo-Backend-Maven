@@ -1,4 +1,4 @@
-package susturismo.susturismo.auth.secutiry;
+package susturismo.susturismo.secutiry;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

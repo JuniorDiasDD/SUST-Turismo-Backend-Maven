@@ -1,4 +1,4 @@
-package susturismo.susturismo.auth.secutiry;
+package susturismo.susturismo.secutiry;
 
 import susturismo.susturismo.repository.UserRepository;
 import jakarta.servlet.FilterChain;

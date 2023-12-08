@@ -24,11 +24,11 @@ public class Parceiro extends BaseTable{
     private String status;
 
 
-    @Column(name = "IMAGE")
+    @Column(name = "IMAGE",columnDefinition="TEXT")
     private String image;
 
 
-    @Column(name = "LINK")
+    @Column(name = "LINK",columnDefinition="TEXT")
     private String link;
 
     public UUID getId() {

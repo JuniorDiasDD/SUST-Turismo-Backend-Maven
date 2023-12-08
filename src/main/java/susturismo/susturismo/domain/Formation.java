@@ -14,14 +14,14 @@ public class Formation extends BaseTable{
     private UUID id;
 
     @Basic(optional = false)
-    @Column(name = "TITLE", length = 64)
+    @Column(name = "TITLE", length = 254)
     private String title;
 
-    @Column(name = "DESCRIPTION", length = 254)
+    @Column(name = "DESCRIPTION", columnDefinition="TEXT")
     private String description;
 
     @Basic(optional = false)
-    @Column(name = "OBJECTIVE", length = 254)
+    @Column(name = "OBJECTIVE", columnDefinition="TEXT")
     private String objective;
 
     @Column(name = "RESPONSIBLE", length = 254)
@@ -31,9 +31,9 @@ public class Formation extends BaseTable{
     @Column(name = "STATUS", length = 254)
     private String status;
 
-    @Column(name = "LINK", length = 254)
+    @Column(name = "LINK", columnDefinition="TEXT")
     private String link;
-    @Column(name = "IMAGE")
+    @Column(name = "IMAGE",columnDefinition="TEXT")
     private String image;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})

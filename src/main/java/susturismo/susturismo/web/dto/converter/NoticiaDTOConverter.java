@@ -1,0 +1,68 @@
+package susturismo.susturismo.web.dto.converter;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import susturismo.susturismo.domain.Category;
+import susturismo.susturismo.domain.Event;
+import susturismo.susturismo.domain.Noticia;
+import susturismo.susturismo.web.dto.AccountDTO;
+import susturismo.susturismo.web.dto.CategoryDTO;
+import susturismo.susturismo.web.dto.EventDTO;
+import susturismo.susturismo.web.dto.NoticiaDTO;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Component
+public class NoticiaDTOConverter {
+
+    @Autowired
+    CategoryDTOConverter categoryDTOConverter;
+    @Autowired
+    AccountDTOConverter accountDTOConverter;
+
+    public NoticiaDTO convertToDTO(Noticia noticia) {
+
+        NoticiaDTO dto = new NoticiaDTO();
+
+        dto.setId(noticia.getId());
+        dto.setDescription(noticia.getDescription());
+        dto.setStatus(noticia.getStatus());
+        dto.setDate_publicacao(noticia.getDate_publicacao());
+        dto.setFonte(noticia.getFonte());
+        dto.setTitle(noticia.getTitle());
+        dto.setTags(noticia.getTags());
+        dto.setImage(noticia.getImage());
+        Set<CategoryDTO> categoryDTOS = noticia.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
+    dto.setCategories(categoryDTOS);
+
+        AccountDTO accountDTO=accountDTOConverter.convertToDTO(noticia.getAccount());
+        dto.setAccount(accountDTO);
+
+        return dto;
+
+    }
+
+    public Noticia convertToEntity(NoticiaDTO dto) {
+
+        Noticia noticia = new Noticia();
+        noticia.setId(dto.getId());
+        noticia.setDescription(dto.getDescription());
+        noticia.setStatus(dto.getStatus());
+        noticia.setDate_publicacao(dto.getDate_publicacao());
+        noticia.setFonte(dto.getFonte());
+        noticia.setTitle(dto.getTitle());
+        noticia.setTags(dto.getTags());
+        noticia.setImage(dto.getImage());
+        if(dto.getCategories()!=null &&!dto.getCategories().isEmpty()){
+            Set<Category> categories = dto.getCategories().stream().map(categoryDTOConverter::convertToEntity).collect(Collectors.toSet());
+            noticia.setCategory(categories);
+        }
+
+
+        return noticia;
+
+    }
+
+
+}

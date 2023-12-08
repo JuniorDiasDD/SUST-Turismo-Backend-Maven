@@ -26,6 +26,10 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    public Optional<Category>findByName(String name){
+        return categoryRepository.findByName(name);
+    }
+
     public Category insert(Category category){
         if(categoryRepository.findByName(category.getName()).isPresent()){
             throw new HttpInsertFailedException("This category already exists");
@@ -35,6 +39,8 @@ public class CategoryService {
         category.setCriadoPor(id);
         category.setAlteradoPor(id);
     category.setStatus("Active");
+        UUID uuid = UUID.randomUUID();
+        category.setId(uuid);
         return categoryRepository.save(category);
     }
 

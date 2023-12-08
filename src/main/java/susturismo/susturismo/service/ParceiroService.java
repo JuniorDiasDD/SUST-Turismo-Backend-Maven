@@ -35,7 +35,9 @@ public class ParceiroService {
         UUID id= userRepository.findByUsername(userName).get().getId();
         parceiro.setCriadoPor(id);
         parceiro.setAlteradoPor(id);
-    parceiro.setStatus("Active");
+        parceiro.setStatus("Active");
+        UUID uuid = UUID.randomUUID();
+        parceiro.setId(uuid);
         return parceiroRepository.save(parceiro);
     }
 

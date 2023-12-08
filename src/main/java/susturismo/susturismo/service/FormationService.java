@@ -49,6 +49,8 @@ public class FormationService {
         valueFormation.setCriadoPor(id);
         valueFormation.setAlteradoPor(id);
         valueFormation.setStatus("Active");
+        UUID uuid = UUID.randomUUID();
+        valueFormation.setId(uuid);
         return formationRepository.save(valueFormation);
     }
 

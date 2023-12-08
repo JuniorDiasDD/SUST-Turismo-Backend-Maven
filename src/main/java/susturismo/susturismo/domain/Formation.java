@@ -9,19 +9,18 @@ import java.util.UUID;
 @Table(name = "formation")
 public class Formation extends BaseTable{
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID", nullable = false)
     private UUID id;
 
     @Basic(optional = false)
-    @Column(name = "TITLE", length = 254)
+    @Column(name = "TITLE", columnDefinition = "TEXT")
     private String title;
 
-    @Column(name = "DESCRIPTION", columnDefinition="TEXT")
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
     private String description;
 
     @Basic(optional = false)
-    @Column(name = "OBJECTIVE", columnDefinition="TEXT")
+    @Column(name = "OBJECTIVE", length = 254)
     private String objective;
 
     @Column(name = "RESPONSIBLE", length = 254)
@@ -31,10 +30,20 @@ public class Formation extends BaseTable{
     @Column(name = "STATUS", length = 254)
     private String status;
 
-    @Column(name = "LINK", columnDefinition="TEXT")
+    @Column(name = "LINK", columnDefinition = "TEXT")
     private String link;
-    @Column(name = "IMAGE",columnDefinition="TEXT")
+    @Column(name = "IMAGE",columnDefinition = "TEXT")
     private String image;
+public Formation(){}
+    public Formation(String title, String description, String objective, String responsible, String link, String image, Set<Category> category) {
+        this.title = title;
+        this.description = description;
+        this.objective = objective;
+        this.responsible = responsible;
+        this.link = link;
+        this.image = image;
+        this.category = category;
+    }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinTable(

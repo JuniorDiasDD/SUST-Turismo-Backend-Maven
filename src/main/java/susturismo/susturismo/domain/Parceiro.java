@@ -8,7 +8,6 @@ import java.util.UUID;
 @Table(name = "parceiros")
 public class Parceiro extends BaseTable{
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID", nullable = false)
     private UUID id;
 
@@ -16,20 +15,28 @@ public class Parceiro extends BaseTable{
     @Column(name = "NAME", length = 64)
     private String name;
 
-    @Column(name = "DESCRIPTION", length = 254)
+    @Column(name = "DESCRIPTION",columnDefinition="TEXT")
     private String description;
 
     @Basic(optional = false)
     @Column(name = "STATUS", length = 254)
     private String status;
 
-
     @Column(name = "IMAGE",columnDefinition="TEXT")
     private String image;
 
-
     @Column(name = "LINK",columnDefinition="TEXT")
     private String link;
+
+    public Parceiro(){}
+
+    public Parceiro( String name, String description, String image, String link) {
+
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.link = link;
+    }
 
     public UUID getId() {
         return id;

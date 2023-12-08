@@ -9,7 +9,6 @@ import java.util.UUID;
 @Table(name = "category")
 public class Category extends BaseTable{
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID", nullable = false)
     private UUID id;
 
@@ -30,10 +29,11 @@ public class Category extends BaseTable{
     private Set<Feed> feeds;
 
     public Category(){}
-    public Category(String name, String description, String status) {
+
+    public Category( String name, String description) {
+
         this.name = name;
         this.description = description;
-        this.status = status;
     }
 
     public UUID getId() {

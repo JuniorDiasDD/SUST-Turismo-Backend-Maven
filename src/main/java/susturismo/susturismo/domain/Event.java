@@ -15,10 +15,10 @@ public class Event extends BaseTable{
     private UUID id;
 
     @Basic(optional = false)
-    @Column(name = "TITLE", length = 64)
+    @Column(name = "TITLE", columnDefinition = "TEXT")
     private String title;
 
-    @Column(name = "DESCRIPTION", length = 254)
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
     private String description;
 
     @Basic(optional = false)

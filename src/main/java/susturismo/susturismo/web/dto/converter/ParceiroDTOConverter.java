@@ -18,6 +18,7 @@ public class ParceiroDTOConverter {
         dto.setStatus(parceiro.getStatus());
         dto.setName(parceiro.getName());
         dto.setImage(parceiro.getImage());
+        dto.setLink(parceiro.getLink());
 
         return dto;
     }
@@ -30,6 +31,7 @@ public class ParceiroDTOConverter {
         objt.setStatus(dto.getStatus());
         objt.setName(dto.getName());
         objt.setImage(dto.getImage());
+        objt.setLink(dto.getLink());
         return objt;
 
     }

@@ -8,7 +8,7 @@ public class ParceiroDTO {
     private String description;
     private String status;
     private String image;
-
+    private String link;
     public UUID getId() {
         return id;
     }
@@ -47,5 +47,13 @@ public class ParceiroDTO {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

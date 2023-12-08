@@ -1,7 +1,5 @@
 package susturismo.susturismo.service;
 
-import susturismo.susturismo.domain.Category;
-import susturismo.susturismo.domain.Event;
 import susturismo.susturismo.domain.Parceiro;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
@@ -11,7 +9,6 @@ import susturismo.susturismo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -57,6 +54,10 @@ public class ParceiroService {
         if(parceiro.getImage()!=null){
             optionalParceiro.get().setImage(parceiro.getImage());
         }
+        if(parceiro.getLink()!=null){
+            optionalParceiro.get().setLink(parceiro.getLink());
+        }
+
 
         String userName=SecurityContextHolder.getContext().getAuthentication().getName();
         UUID id= userRepository.findByUsername(userName).get().getId();

@@ -25,15 +25,20 @@ public class EventDTOConverter {
         EventDTO eventDTO = new EventDTO();
 
         eventDTO.setId(event.getId());
-    eventDTO.setDescription(event.getDescription());
-    eventDTO.setStatus(event.getStatus());
-    eventDTO.setDate(event.getDate());
-    eventDTO.setHour(event.getHour());
-    eventDTO.setLocal(event.getLocal());
-    eventDTO.setTitle(event.getTitle());
+        eventDTO.setDescription(event.getDescription());
+        eventDTO.setStatus(event.getStatus());
+        eventDTO.setDate_finish(event.getDate_finish());
+        eventDTO.setDate_init(event.getDate_init());
+        eventDTO.setHour_finish(event.getHour_finish());
+        eventDTO.setImage(event.getImage());
+        eventDTO.setHour_init(event.getHour_init());
+        eventDTO.setOrganizer(event.getOrganizer());
+        eventDTO.setTags(event.getTags());
+        eventDTO.setLocal(event.getLocal());
+        eventDTO.setTitle(event.getTitle());
 
         Set<CategoryDTO> categoryDTOS = event.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
-    eventDTO.setCategories(categoryDTOS);
+        eventDTO.setCategories(categoryDTOS);
 
         AccountDTO accountDTO=accountDTOConverter.convertToDTO(event.getAccount());
         eventDTO.setAccount(accountDTO);
@@ -48,7 +53,13 @@ public class EventDTOConverter {
         event.setId(eventDTO.getId());
         event.setDescription(eventDTO.getDescription());
         event.setStatus(eventDTO.getStatus());
-        event.setHour(eventDTO.getHour());
+        event.setDate_finish(eventDTO.getDate_finish());
+        event.setDate_init(eventDTO.getDate_init());
+        event.setHour_finish(eventDTO.getHour_finish());
+        event.setImage(eventDTO.getImage());
+        event.setHour_init(eventDTO.getHour_init());
+        event.setOrganizer(eventDTO.getOrganizer());
+        event.setTags(eventDTO.getTags());
         event.setLocal(eventDTO.getLocal());
         event.setTitle(eventDTO.getTitle());
         if(eventDTO.getCategories()!=null &&!eventDTO.getCategories().isEmpty()){
@@ -56,7 +67,6 @@ public class EventDTOConverter {
             event.setCategory(categories);
         }
 
-        event.setDate(eventDTO.getDate());
         return event;
 
     }

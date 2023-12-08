@@ -51,13 +51,12 @@ public class EventService {
                 throw new HttpElementNotFoundExeption("Category: "+v.getId()+" not exist");
             }
         });
-
-
         String userName= SecurityContextHolder.getContext().getAuthentication().getName();
         UUID id= userRepository.findByUsername(userName).get().getId();
         event.setCriadoPor(id);
         event.setAlteradoPor(id);
         event.setStatus("Active");
+        event.setImage("https://www.susturismo.com/img/sobrenos1.png");
         return eventRepository.save(event);
     }
 
@@ -86,11 +85,26 @@ public class EventService {
         if(event.getDescription()!=null && !event.getDescription().isEmpty()){
             optionalEvent.get().setDescription(event.getDescription());
         }
-        if(event.getDate()!=null ){
-            optionalEvent.get().setDate(event.getDate());
+        if(event.getOrganizer()!=null ){
+            optionalEvent.get().setOrganizer(event.getOrganizer());
         }
-        if(event.getHour()!=null && !event.getHour().isEmpty()){
-            optionalEvent.get().setHour(event.getHour());
+        if(event.getImage()!=null && !event.getImage().isEmpty()){
+            optionalEvent.get().setImage(event.getImage());
+        }
+        if(event.getDate_finish()!=null){
+            optionalEvent.get().setDate_finish(event.getDate_finish());
+        }
+        if(event.getDate_init()!=null){
+            optionalEvent.get().setDate_init(event.getDate_init());
+        }
+        if(event.getHour_finish()!=null){
+            optionalEvent.get().setHour_finish(event.getHour_finish());
+        }
+        if(event.getHour_init()!=null){
+            optionalEvent.get().setHour_init(event.getHour_init());
+        }
+        if(event.getTags()!=null){
+            optionalEvent.get().setTags(event.getTags());
         }
 
         if(event.getLocal()!=null && !event.getLocal().isEmpty()){
@@ -121,6 +135,9 @@ public class EventService {
     }
 
     public Optional<Event> findById(UUID id){
-        return eventRepository.findById(id);
+        Optional<Event> event= eventRepository.findById(id);
+        Optional<Account>optional=accountRepository.findAccountByAuth(event.get().getCriadoPor());
+        optional.ifPresent(event.get()::setAccount);
+        return event;
     }
 }

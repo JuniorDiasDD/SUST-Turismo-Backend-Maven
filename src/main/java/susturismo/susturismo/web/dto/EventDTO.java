@@ -10,10 +10,15 @@ public class EventDTO {
     private UUID id;
     private String title;
     private String description;
-    private LocalDateTime date;
-    private String hour;
+    private LocalDateTime date_init;
+    private LocalDateTime date_finish;
+    private String hour_init;
+    private String hour_finish;
     private String local;
     private String status;
+    private String tags;
+    private String image;
+    private String organizer;
     private AccountDTO account;
     Set<CategoryDTO> categories;
 
@@ -39,22 +44,6 @@ public class EventDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public String getHour() {
-        return hour;
-    }
-
-    public void setHour(String hour) {
-        this.hour = hour;
     }
 
     public String getLocal() {
@@ -87,5 +76,61 @@ public class EventDTO {
 
     public void setCategories(Set<CategoryDTO> categories) {
         this.categories = categories;
+    }
+
+    public LocalDateTime getDate_init() {
+        return date_init;
+    }
+
+    public void setDate_init(LocalDateTime date_init) {
+        this.date_init = date_init;
+    }
+
+    public LocalDateTime getDate_finish() {
+        return date_finish;
+    }
+
+    public void setDate_finish(LocalDateTime date_finish) {
+        this.date_finish = date_finish;
+    }
+
+    public String getHour_init() {
+        return hour_init;
+    }
+
+    public void setHour_init(String hour_init) {
+        this.hour_init = hour_init;
+    }
+
+    public String getHour_finish() {
+        return hour_finish;
+    }
+
+    public void setHour_finish(String hour_finish) {
+        this.hour_finish = hour_finish;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(String organizer) {
+        this.organizer = organizer;
     }
 }

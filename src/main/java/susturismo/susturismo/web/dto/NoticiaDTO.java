@@ -15,7 +15,7 @@ public class NoticiaDTO {
     private LocalDateTime date_publicacao;
     private AccountDTO account;
     Set<CategoryDTO> categories;
-
+    Set<NoticiaDTO> semelhantes;
     public UUID getId() {
         return id;
     }
@@ -94,5 +94,13 @@ public class NoticiaDTO {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Set<NoticiaDTO> getSemelhantes() {
+        return semelhantes;
+    }
+
+    public void setSemelhantes(Set<NoticiaDTO> semelhantes) {
+        this.semelhantes = semelhantes;
     }
 }

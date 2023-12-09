@@ -3,6 +3,7 @@ package susturismo.susturismo.domain;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -47,6 +48,8 @@ public class Noticia extends BaseTable{
 
     @Transient
     Account account;
+    @Transient
+    Set<Noticia> semelhantes =new HashSet<>();
     public UUID getId() {
         return id;
     }
@@ -125,5 +128,13 @@ public class Noticia extends BaseTable{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Set<Noticia> getSemelhantes() {
+        return semelhantes;
+    }
+
+    public void setSemelhantes(Set<Noticia> semelhantes) {
+        this.semelhantes = semelhantes;
     }
 }

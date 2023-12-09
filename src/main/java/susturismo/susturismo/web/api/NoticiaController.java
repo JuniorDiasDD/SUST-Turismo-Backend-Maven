@@ -148,7 +148,7 @@ public class NoticiaController implements NoticiaApi{
         ResponseDTO<NoticiaDTO> response;
 
         Optional<Noticia> noticia = noticiaService.findById(id);
-
+        System.out.println(noticia.get().getSemelhantes().size());
         if (noticia.isPresent()) {
             dto = noticiaDTOConverter.convertToDTO(noticia.get());
 

@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class EventService {
@@ -163,6 +161,15 @@ public class EventService {
         if(event.get().getPrice()==null){
             event.get().setPrice((float) 0);
         }
+        Set<Event> list=new HashSet<>();
+        event.get().getCategory().forEach(v->{
+            List<Event> eventList=eventRepository.findAllSemelhante("Active",v.getId(),id);
+            if(!eventList.isEmpty()){
+                list.addAll(eventList);
+            }
+        });
+
+        event.get().setSemelhantes(list);
         return event;
     }
 }

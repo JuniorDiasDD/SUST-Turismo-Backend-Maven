@@ -13,9 +13,7 @@ import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.repository.*;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class NoticiaService {
@@ -39,6 +37,7 @@ public class NoticiaService {
 
         return list;
     }
+
     public List<Noticia> findAllLimit(){
         List<Noticia> list=noticiaRepository.findAllLimit("Active");
         list.forEach(v->{
@@ -141,6 +140,17 @@ public class NoticiaService {
 
         Optional<Account>optional=accountRepository.findAccountByAuth(noticia.get().getCriadoPor());
         optional.ifPresent(noticia.get()::setAccount);
+
+        Set<Noticia> list=new HashSet<>();
+        noticia.get().getCategory().forEach(v->{
+                List<Noticia> noticiaList=noticiaRepository.findAllSemelhante("Active",v.getId(),id);
+                if(!noticiaList.isEmpty()){
+                    list.addAll(noticiaList);
+                }
+        });
+
+        noticia.get().setSemelhantes(list);
+
 
         return noticia;
     }

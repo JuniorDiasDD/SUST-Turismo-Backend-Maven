@@ -8,7 +8,9 @@ import susturismo.susturismo.web.dto.CategoryDTO;
 import susturismo.susturismo.web.dto.EventDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import susturismo.susturismo.web.dto.NoticiaDTO;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,11 +44,39 @@ public class EventDTOConverter {
 
         AccountDTO accountDTO=accountDTOConverter.convertToDTO(event.getAccount());
         eventDTO.setAccount(accountDTO);
+        if(!event.getSemelhantes().isEmpty()){
+            Set<EventDTO> eventDTOS = new HashSet<>();
+            event.getSemelhantes().forEach(v->{
+                eventDTOS.add(convertToDTOExtra(v));
+            });
+            eventDTO.setSemelhantes(eventDTOS);
 
+        }
         return eventDTO;
 
     }
+    public EventDTO convertToDTOExtra(Event event) {
 
+        EventDTO eventDTO = new EventDTO();
+
+        eventDTO.setId(event.getId());
+        eventDTO.setDescription(event.getDescription());
+        eventDTO.setStatus(event.getStatus());
+        eventDTO.setDate_finish(event.getDate_finish());
+        eventDTO.setDate_init(event.getDate_init());
+        eventDTO.setHour_finish(event.getHour_finish());
+        eventDTO.setImage(event.getImage());
+        eventDTO.setHour_init(event.getHour_init());
+        eventDTO.setOrganizer(event.getOrganizer());
+        eventDTO.setTags(event.getTags());
+        eventDTO.setLocal(event.getLocal());
+        eventDTO.setTitle(event.getTitle());
+        eventDTO.setPrice(event.getPrice());
+        Set<CategoryDTO> categoryDTOS = event.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
+        eventDTO.setCategories(categoryDTOS);
+        return eventDTO;
+
+    }
     public Event convertToEntity(EventDTO eventDTO) {
 
         Event event = new Event();

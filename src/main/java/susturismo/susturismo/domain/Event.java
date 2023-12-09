@@ -3,6 +3,7 @@ package susturismo.susturismo.domain;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -62,6 +63,8 @@ public class Event extends BaseTable{
 
     @Transient
     Account account;
+    @Transient
+    Set<Event>semelhantes=new HashSet<>();
 
     public Event(){
 
@@ -185,5 +188,13 @@ public class Event extends BaseTable{
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public Set<Event> getSemelhantes() {
+        return semelhantes;
+    }
+
+    public void setSemelhantes(Set<Event> semelhantes) {
+        this.semelhantes = semelhantes;
     }
 }

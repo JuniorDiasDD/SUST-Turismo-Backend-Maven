@@ -10,6 +10,7 @@ import susturismo.susturismo.web.dto.CategoryDTO;
 import susturismo.susturismo.web.dto.EventDTO;
 import susturismo.susturismo.web.dto.NoticiaDTO;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,8 +35,17 @@ public class NoticiaDTOConverter {
         dto.setTags(noticia.getTags());
         dto.setImage(noticia.getImage());
         Set<CategoryDTO> categoryDTOS = noticia.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
-    dto.setCategories(categoryDTOS);
+        dto.setCategories(categoryDTOS);
 
+
+    if(!noticia.getSemelhantes().isEmpty()){
+        Set<NoticiaDTO> noticiaDTOS = new HashSet<>();
+                noticia.getSemelhantes().forEach(v->{
+                    noticiaDTOS.add(convertToDTOExtra(v));
+                });
+        dto.setSemelhantes(noticiaDTOS);
+
+    }
         AccountDTO accountDTO=accountDTOConverter.convertToDTO(noticia.getAccount());
         dto.setAccount(accountDTO);
 
@@ -43,6 +53,24 @@ public class NoticiaDTOConverter {
 
     }
 
+    public NoticiaDTO convertToDTOExtra(Noticia noticia) {
+
+        NoticiaDTO dto = new NoticiaDTO();
+
+        dto.setId(noticia.getId());
+        dto.setDescription(noticia.getDescription());
+        dto.setStatus(noticia.getStatus());
+        dto.setDate_publicacao(noticia.getDate_publicacao());
+        dto.setFonte(noticia.getFonte());
+        dto.setTitle(noticia.getTitle());
+        dto.setTags(noticia.getTags());
+        dto.setImage(noticia.getImage());
+        Set<CategoryDTO> categoryDTOS = noticia.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
+        dto.setCategories(categoryDTOS);
+
+        return dto;
+
+    }
     public Noticia convertToEntity(NoticiaDTO dto) {
 
         Noticia noticia = new Noticia();

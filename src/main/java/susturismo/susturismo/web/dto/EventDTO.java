@@ -1,6 +1,5 @@
 package susturismo.susturismo.web.dto;
 
-
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -22,6 +21,7 @@ public class EventDTO {
     private Float price;
     private AccountDTO account;
     Set<CategoryDTO> categories;
+    Set<EventDTO> semelhantes;
 
     public UUID getId() {
         return id;
@@ -141,5 +141,13 @@ public class EventDTO {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public Set<EventDTO> getSemelhantes() {
+        return semelhantes;
+    }
+
+    public void setSemelhantes(Set<EventDTO> semelhantes) {
+        this.semelhantes = semelhantes;
     }
 }

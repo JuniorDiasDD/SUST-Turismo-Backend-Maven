@@ -19,4 +19,8 @@ public interface EventRepository extends JpaRepository<Event, UUID> {
 
     @Query(value="select * from events as up JOIN event_category as nc on up.id=nc.event_id where up.id<>:id and up.status = :status and nc.category_id=:category ORDER BY up.criado_em DESC LIMIT 6",nativeQuery = true)
     List<Event> findAllSemelhante(@Param("status") String status,@Param("category") UUID category,@Param("id") UUID id);
+
+    @Query("select up from events up where up.criadoPor = :user ORDER BY criadoEm DESC ")
+    List<Event> findAllByUser(@Param("user") UUID user);
+
 }

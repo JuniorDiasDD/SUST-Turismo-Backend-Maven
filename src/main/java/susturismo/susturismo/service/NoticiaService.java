@@ -1,7 +1,6 @@
 package susturismo.susturismo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import susturismo.susturismo.domain.Account;
 import susturismo.susturismo.domain.Category;
 import susturismo.susturismo.domain.Noticia;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
-import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.repository.*;
 
@@ -40,6 +38,17 @@ public class NoticiaService {
 
     public List<Noticia> findAllLimit(){
         List<Noticia> list=noticiaRepository.findAllLimit("Active");
+        list.forEach(v->{
+            Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
+            optional.ifPresent(v::setAccount);
+        });
+
+        return list;
+    }
+    public List<Noticia> findAllByUser(){
+        String userName= SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID id= userRepository.findByUsername(userName).get().getId();
+        List<Noticia> list=noticiaRepository.findAllByUser(id);
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);

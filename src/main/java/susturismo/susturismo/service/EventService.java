@@ -37,6 +37,21 @@ public class EventService {
         });
         return list;
     }
+    public List<Event> findAllUser(){
+
+        String userName= SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID id= userRepository.findByUsername(userName).get().getId();
+        List<Event> list=eventRepository.findAllByUser(id);
+
+        list.forEach(v->{
+            Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
+            optional.ifPresent(v::setAccount);
+            if(v.getPrice()==null){
+                v.setPrice((float) 0);
+            }
+        });
+        return list;
+    }
     public List<Event> findAllStatus(String status){
         List<Event> list=eventRepository.findAllEventsActive(status);
 
@@ -150,10 +165,7 @@ public class EventService {
         }else{
             throw new HttpElementNotFoundExeption("Not exist this event id:" +uuid);
         }
-
-
     }
-
     public Optional<Event> findById(UUID id){
         Optional<Event> event= eventRepository.findById(id);
         Optional<Account>optional=accountRepository.findAccountByAuth(event.get().getCriadoPor());

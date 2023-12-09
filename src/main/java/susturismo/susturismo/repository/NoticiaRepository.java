@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import susturismo.susturismo.domain.Event;
 import susturismo.susturismo.domain.Noticia;
 
 import java.util.List;
@@ -23,4 +24,7 @@ public interface NoticiaRepository extends JpaRepository<Noticia, UUID> {
 
     @Query(value="select * from noticia as up JOIN noticia_category as nc on up.id=nc.noticia_id where up.id<>:id and up.status = :status and nc.category_id=:category ORDER BY up.criado_em DESC LIMIT 6",nativeQuery = true)
     List<Noticia> findAllSemelhante(@Param("status") String status,@Param("category") UUID category,@Param("id") UUID id);
+
+    @Query("select up from noticia up where up.criadoPor = :user ORDER BY criadoEm DESC ")
+    List<Noticia> findAllByUser(@Param("user") UUID user);
 }

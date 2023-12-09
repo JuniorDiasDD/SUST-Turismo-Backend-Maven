@@ -72,6 +72,26 @@ public class EventController implements EventApi{
     }
 
     @Override
+    public ResponseEntity<ResponseDTOList<EventDTO>> findAllByUser(RequestDTOList<EventDTO> request) {
+        List<EventDTO> dtoList;
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<EventDTO> response;
+        List<Event> list = eventService.findAllUser();
+
+        dtoList = list.stream().map(eventDTOConverter::convertToDTO).collect(Collectors.toList());
+
+        headers.add("TotalElementCount", String.valueOf(list.size()));
+
+        if (dtoList.isEmpty()) {
+
+            throw new HttpElementNotFoundExeption("No Records of Events Where Found");
+        }
+        response = responseDTOConverter.createResponseWithList(request, dtoList, "All Records Of Events", true);
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<ResponseDTOList<EventDTO>> findAllEventsActive(RequestDTOList<EventDTO> request) {
         List<EventDTO> dtoList;
         HttpHeaders headers = new HttpHeaders();

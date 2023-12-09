@@ -71,6 +71,25 @@ public class NoticiaController implements NoticiaApi{
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
+    @Override
+    public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllByUser(RequestDTOList<NoticiaDTO> request) {
+        List<NoticiaDTO> dtoList;
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<NoticiaDTO> response;
+        List<Noticia> list = noticiaService.findAllByUser();
+
+        dtoList = list.stream().map(noticiaDTOConverter::convertToDTO).collect(Collectors.toList());
+
+        headers.add("TotalElementCount", String.valueOf(list.size()));
+
+        if (dtoList.isEmpty()) {
+
+            throw new HttpElementNotFoundExeption("No Records of Noticias Where Found");
+        }
+        response = responseDTOConverter.createResponseWithList(request, dtoList, "All Records Of Noticias", true);
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
 
     @Override
     public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllActive(RequestDTOList<NoticiaDTO> request) {

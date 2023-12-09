@@ -18,6 +18,8 @@ public interface EventApi {
     public ResponseEntity<ResponseDTOList<EventDTO>> findAllEvents(@RequestBody(required = false) RequestDTOList<EventDTO> request);
     @GetMapping(path = "/limit")
     public ResponseEntity<ResponseDTOList<EventDTO>> findAllLimit(@RequestBody(required = false) RequestDTOList<EventDTO> request);
+    @GetMapping(path = "/my")
+    public ResponseEntity<ResponseDTOList<EventDTO>> findAllByUser(@RequestBody(required = false) RequestDTOList<EventDTO> request);
 
     @GetMapping(path = "")
     public ResponseEntity<ResponseDTOList<EventDTO>> findAllEventsActive(@RequestBody(required = false) RequestDTOList<EventDTO> request);

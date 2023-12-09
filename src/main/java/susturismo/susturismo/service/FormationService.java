@@ -1,5 +1,6 @@
 package susturismo.susturismo.service;
 
+import org.springframework.data.domain.Sort;
 import susturismo.susturismo.domain.Category;
 import susturismo.susturismo.domain.Event;
 import susturismo.susturismo.domain.Feed;
@@ -29,7 +30,7 @@ public class FormationService {
     CategoryRepository categoryRepository;
 
     public List<Formation> findAll(){
-        return formationRepository.findAll();
+        return formationRepository.findAll(Sort.by(Sort.Direction.DESC, "criadoEm"));
     }
     public List<Formation> findAllStatus(String status){
         return formationRepository.findAllFormationStatus(status);

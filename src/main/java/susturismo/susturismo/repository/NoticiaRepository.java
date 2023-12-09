@@ -14,7 +14,10 @@ import java.util.UUID;
 public interface NoticiaRepository extends JpaRepository<Noticia, UUID> {
 
     Optional<Noticia> findByTitle(String title);
-    @Query("select up from noticia up where up.status = :status")
+
+    @Query("select up from noticia up where up.status = :status ORDER BY criadoEm DESC")
     List<Noticia> findAllNoticiaStatus(@Param("status") String status);
 
+    @Query("select up from noticia up where up.status = :status ORDER BY criadoEm DESC LIMIT 3")
+    List<Noticia> findAllLimit(@Param("status") String status);
 }

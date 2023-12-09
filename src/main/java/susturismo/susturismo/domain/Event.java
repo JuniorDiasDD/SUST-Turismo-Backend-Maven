@@ -50,6 +50,8 @@ public class Event extends BaseTable{
 
     @Column(name = "IMAGE", columnDefinition = "TEXT")
     private String image;
+    @Column(name = "PRICE")
+    private Float price;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinTable(
@@ -175,5 +177,13 @@ public class Event extends BaseTable{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

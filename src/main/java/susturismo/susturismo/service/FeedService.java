@@ -1,5 +1,6 @@
 package susturismo.susturismo.service;
 
+import org.springframework.data.domain.Sort;
 import susturismo.susturismo.domain.Account;
 import susturismo.susturismo.domain.Feed;
 import susturismo.susturismo.domain.Noticia;
@@ -27,7 +28,7 @@ public class FeedService {
     AccountRepository accountRepository;
 
     public List<Feed> findAll(){
-        List<Feed> list=feedRepository.findAll();
+        List<Feed> list=feedRepository.findAll(Sort.by(Sort.Direction.DESC, "criadoEm"));
 
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());

@@ -1,6 +1,7 @@
 package susturismo.susturismo.web.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,26 @@ public class NoticiaController implements NoticiaApi{
         HttpHeaders headers = new HttpHeaders();
         ResponseDTOList<NoticiaDTO> response;
         List<Noticia> list = noticiaService.findAll();
+
+        dtoList = list.stream().map(noticiaDTOConverter::convertToDTO).collect(Collectors.toList());
+
+        headers.add("TotalElementCount", String.valueOf(list.size()));
+
+        if (dtoList.isEmpty()) {
+
+            throw new HttpElementNotFoundExeption("No Records of Noticias Where Found");
+        }
+        response = responseDTOConverter.createResponseWithList(request, dtoList, "All Records Of Noticias", true);
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllLimit(RequestDTOList<NoticiaDTO> request) {
+        List<NoticiaDTO> dtoList;
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<NoticiaDTO> response;
+        List<Noticia> list = noticiaService.findAllLimit();
 
         dtoList = list.stream().map(noticiaDTOConverter::convertToDTO).collect(Collectors.toList());
 

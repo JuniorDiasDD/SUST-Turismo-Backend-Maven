@@ -1,6 +1,8 @@
 package susturismo.susturismo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import susturismo.susturismo.domain.Account;
@@ -28,8 +30,17 @@ public class NoticiaService {
     AccountRepository accountRepository;
 
     public List<Noticia> findAll(){
-        List<Noticia> list=noticiaRepository.findAll();
+        List<Noticia> list=noticiaRepository.findAll(Sort.by(Sort.Direction.DESC, "criadoEm"));
 
+        list.forEach(v->{
+            Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
+            optional.ifPresent(v::setAccount);
+        });
+
+        return list;
+    }
+    public List<Noticia> findAllLimit(){
+        List<Noticia> list=noticiaRepository.findAllLimit("Active");
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);
@@ -48,9 +59,9 @@ public class NoticiaService {
         return list;
     }
     public Noticia insert(Noticia noticia){
-        if(noticiaRepository.findByTitle(noticia.getTitle()).isPresent()){
+       /* if(noticiaRepository.findByTitle(noticia.getTitle()).isPresent()){
             throw new HttpInsertFailedException("This Noticia already exists");
-        }
+        }*/
         noticia.getCategory().forEach(v->{
             Optional<Category> category=categoryRepository.findById(v.getId());
             if(category.isEmpty()){

@@ -19,6 +19,7 @@ public class EventDTO {
     private String tags;
     private String image;
     private String organizer;
+    private Float price;
     private AccountDTO account;
     Set<CategoryDTO> categories;
 
@@ -132,5 +133,13 @@ public class EventDTO {
 
     public void setOrganizer(String organizer) {
         this.organizer = organizer;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

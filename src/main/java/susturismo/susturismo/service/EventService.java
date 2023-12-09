@@ -1,5 +1,6 @@
 package susturismo.susturismo.service;
 
+import org.springframework.data.domain.Sort;
 import susturismo.susturismo.domain.*;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.repository.AccountRepository;
@@ -27,11 +28,14 @@ public class EventService {
     AccountRepository accountRepository;
 
     public List<Event> findAll(){
-        List<Event> list=eventRepository.findAll();
+        List<Event> list=eventRepository.findAll(Sort.by(Sort.Direction.DESC, "criadoEm"));
 
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);
+            if(v.getPrice()==null){
+                v.setPrice((float) 0);
+            }
         });
         return list;
     }
@@ -41,6 +45,21 @@ public class EventService {
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);
+            if(v.getPrice()==null){
+                v.setPrice((float) 0);
+            }
+        });
+        return list;
+    }
+    public List<Event> findAllLimit(){
+        List<Event> list=eventRepository.findAllLimit("Active");
+
+        list.forEach(v->{
+            Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
+            optional.ifPresent(v::setAccount);
+            if(v.getPrice()==null){
+                v.setPrice((float) 0);
+            }
         });
         return list;
     }
@@ -51,6 +70,9 @@ public class EventService {
                 throw new HttpElementNotFoundExeption("Category: "+v.getId()+" not exist");
             }
         });
+        if(event.getPrice()==null){
+            event.setPrice((float) 0);
+        }
         String userName= SecurityContextHolder.getContext().getAuthentication().getName();
         UUID id= userRepository.findByUsername(userName).get().getId();
         event.setCriadoPor(id);
@@ -138,6 +160,9 @@ public class EventService {
         Optional<Event> event= eventRepository.findById(id);
         Optional<Account>optional=accountRepository.findAccountByAuth(event.get().getCriadoPor());
         optional.ifPresent(event.get()::setAccount);
+        if(event.get().getPrice()==null){
+            event.get().setPrice((float) 0);
+        }
         return event;
     }
 }

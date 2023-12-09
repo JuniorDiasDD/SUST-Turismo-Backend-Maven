@@ -36,7 +36,7 @@ public class EventDTOConverter {
         eventDTO.setTags(event.getTags());
         eventDTO.setLocal(event.getLocal());
         eventDTO.setTitle(event.getTitle());
-
+        eventDTO.setPrice(event.getPrice());
         Set<CategoryDTO> categoryDTOS = event.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
         eventDTO.setCategories(categoryDTOS);
 
@@ -62,6 +62,7 @@ public class EventDTOConverter {
         event.setTags(eventDTO.getTags());
         event.setLocal(eventDTO.getLocal());
         event.setTitle(eventDTO.getTitle());
+        event.setPrice(eventDTO.getPrice());
         if(eventDTO.getCategories()!=null &&!eventDTO.getCategories().isEmpty()){
             Set<Category> categories = eventDTO.getCategories().stream().map(categoryDTOConverter::convertToEntity).collect(Collectors.toSet());
             event.setCategory(categories);

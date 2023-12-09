@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface FormationRepository extends JpaRepository<Formation, UUID> {
-    @Query("select up from formation up where up.status = :status")
+    @Query("select up from formation up where up.status = :status order by criadoEm DESC")
     List<Formation> findAllFormationStatus(@Param("status") String status);
     Optional<Formation> findByTitle(String title);
 

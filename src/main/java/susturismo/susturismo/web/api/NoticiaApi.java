@@ -17,6 +17,8 @@ public interface NoticiaApi {
 
     @GetMapping(path = "/all")
     public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAll(@RequestBody(required = false) RequestDTOList<NoticiaDTO> request);
+    @GetMapping(path = "/limit")
+    public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllLimit(@RequestBody(required = false) RequestDTOList<NoticiaDTO> request);
 
     @GetMapping(path = "")
     public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllActive(@RequestBody(required = false) RequestDTOList<NoticiaDTO> request);

@@ -13,6 +13,6 @@ import java.util.UUID;
 
 @Repository
 public interface FeedRepository extends JpaRepository<Feed, UUID> {
-    @Query("select up from feed up where up.status = :status")
+    @Query("select up from feed up where up.status = :status ORDER BY criadoEm DESC")
     List<Feed> findAllFeedStatus(@Param("status") String status);
 }

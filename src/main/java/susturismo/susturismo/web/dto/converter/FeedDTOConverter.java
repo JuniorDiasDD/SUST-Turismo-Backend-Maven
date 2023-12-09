@@ -26,6 +26,7 @@ public class FeedDTOConverter {
         dto.setDescription(feed.getDescription());
         dto.setStatus(feed.getStatus());
         dto.setImage(feed.getImage());
+        dto.setData(feed.getCriadoEm());
 
         AccountDTO accountDTO=accountDTOConverter.convertToDTO(feed.getAccount());
         dto.setAccount(accountDTO);

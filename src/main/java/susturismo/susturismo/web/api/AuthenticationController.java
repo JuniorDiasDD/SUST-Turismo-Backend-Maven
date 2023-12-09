@@ -21,6 +21,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 public class AuthenticationController implements AuthenticationApi {
 
@@ -46,9 +48,12 @@ public class AuthenticationController implements AuthenticationApi {
            throw new HttpElementNotFoundExeption("User is Disable");
         }
 
+        UUID id= accountService.findByUserId(authenticationRequest.getLogin());
+
         var token=tokenService.generateToken((User)auth.getPrincipal());
 
-        TokenDTO tokenDto=tokenDTOConverter.convertToDTO(authenticationRequest.getLogin(),token);
+
+        TokenDTO tokenDto=tokenDTOConverter.convertToDTO(authenticationRequest.getLogin(),token,id);
 
       return ResponseEntity.ok(tokenDto);
     }

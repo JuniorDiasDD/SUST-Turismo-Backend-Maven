@@ -1,4 +1,5 @@
 package susturismo.susturismo.web.dto;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -9,7 +10,15 @@ public class FeedDTO {
     private String description;
     private String status;
     private AccountDTO account;
+    private LocalDateTime data;
 
+    public LocalDateTime getData() {
+        return data;
+    }
+
+    public void setData(LocalDateTime data) {
+        this.data = data;
+    }
 
     public UUID getId() {
         return id;

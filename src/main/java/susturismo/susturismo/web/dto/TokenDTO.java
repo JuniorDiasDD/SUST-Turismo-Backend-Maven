@@ -1,9 +1,12 @@
 package susturismo.susturismo.web.dto;
 
+import java.util.UUID;
+
 public class TokenDTO implements DTO {
 
     private String token;
     private String login;
+    private UUID id;
 
     public String getLogin() {
         return login;
@@ -21,6 +24,13 @@ public class TokenDTO implements DTO {
         this.token = token;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {

@@ -25,15 +25,15 @@ public class AccountService {
     public List<Account> findAll(){
         return accountRepository.findAll();
     }
-
+    public UUID findByUserId(String login){
+        Optional<Account>optional= accountRepository.findByLogin(login);
+        return optional.get().getId();
+    }
     @Transactional
     public Account insert(Account account, String password, UserRole role){
 
-
         User newUser=new User(account.getLogin(),password,role);
         User savedUser=userRepository.save(newUser);
-
-
         account.setStatus("Active");
         account.setAuth(savedUser.getId());
         if(account.getPortfolios()!=null && !account.getPortfolios().isEmpty()){

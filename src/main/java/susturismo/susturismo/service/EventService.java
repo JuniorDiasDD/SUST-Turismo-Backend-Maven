@@ -91,7 +91,10 @@ public class EventService {
         event.setCriadoPor(id);
         event.setAlteradoPor(id);
         event.setStatus("Active");
-        event.setImage("https://www.susturismo.com/img/sobrenos1.png");
+        if(event.getImage()==null){
+            event.setImage("https://www.susturismo.com/img/sobrenos1.png");
+        }
+
         return eventRepository.save(event);
     }
 

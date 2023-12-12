@@ -1,8 +1,6 @@
 package susturismo.susturismo.domain;
 
 import jakarta.persistence.*;
-
-import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "feed")

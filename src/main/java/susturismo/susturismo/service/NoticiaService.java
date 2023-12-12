@@ -81,7 +81,9 @@ public class NoticiaService {
         noticia.setCriadoPor(id);
         noticia.setAlteradoPor(id);
         noticia.setStatus("Active");
-        noticia.setImage("https://www.susturismo.com/img/sobrenos1.png");
+        if(noticia.getImage()==null){
+            noticia.setImage("https://www.susturismo.com/img/sobrenos1.png");
+        }
         return noticiaRepository.save(noticia);
     }
 

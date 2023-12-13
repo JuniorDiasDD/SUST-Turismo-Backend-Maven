@@ -4,6 +4,7 @@ public class AuthenticationDTO implements DTO{
 
     private String login;
     private String password;
+    private String googleId;
 
     public String getLogin() {
         return login;
@@ -19,6 +20,14 @@ public class AuthenticationDTO implements DTO{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(String googleId) {
+        this.googleId = googleId;
     }
 
     @Override

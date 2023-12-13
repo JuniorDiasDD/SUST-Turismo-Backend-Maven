@@ -1,6 +1,7 @@
 package susturismo.susturismo.web.api;
 
 
+import susturismo.susturismo.domain.Account;
 import susturismo.susturismo.secutiry.TokenService;
 import susturismo.susturismo.domain.User;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
@@ -18,18 +19,18 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 public class AuthenticationController implements AuthenticationApi {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager;
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
     @Autowired
     TokenService tokenService;
     @Autowired
@@ -41,19 +42,33 @@ public class AuthenticationController implements AuthenticationApi {
 
     @Override
     public ResponseEntity<Object> createAuthenticationToken(HttpServletRequest request, AuthenticationDTO authenticationRequest, HttpHeaders headers) {
-        var usernamePassword=new UsernamePasswordAuthenticationToken(authenticationRequest.getLogin(),authenticationRequest.getPassword());
-        var auth= authenticationManager.authenticate(usernamePassword);
-
-        if(!accountService.checkStatus(authenticationRequest.getLogin())){
-           throw new HttpElementNotFoundExeption("User is Disable");
+        TokenDTO tokenDto=null;
+        String username="";
+        String password="";
+        if(authenticationRequest.getGoogleId()!=null){
+            Optional <Account> userGoogleId= accountService.checkGoogle(authenticationRequest.getGoogleId());
+            if(userGoogleId.isEmpty()){
+                throw new HttpElementNotFoundExeption("Google Id not found");
+            }else{
+              username=userGoogleId.get().getLogin();
+              password="PShrgan21#P";
+            }
+        }else{
+           username=authenticationRequest.getLogin();
+           password=authenticationRequest.getPassword();
         }
 
-        UUID id= accountService.findByUserId(authenticationRequest.getLogin());
+        var usernamePassword=new UsernamePasswordAuthenticationToken(username,password);
+        var auth= authenticationManager.authenticate(usernamePassword);
+        if(!accountService.checkStatus(username)){
+            throw new HttpElementNotFoundExeption("User is Disable");
+        }
+
+        UUID id= accountService.findByUserId(username);
 
         var token=tokenService.generateToken((User)auth.getPrincipal());
 
-
-        TokenDTO tokenDto=tokenDTOConverter.convertToDTO(authenticationRequest.getLogin(),token,id);
+        tokenDto=tokenDTOConverter.convertToDTO(username,token,id);
 
       return ResponseEntity.ok(tokenDto);
     }
@@ -69,8 +84,8 @@ public class AuthenticationController implements AuthenticationApi {
         if(this.userRepository.findByLogin(data.getLogin())!=null) {
          throw new HttpInsertFailedException("Username exist");
         }
-        String encryptedPassword= new BCryptPasswordEncoder().encode(data.getPassword());
-        accountService.insert(accountDTOConverter.convertToEntity(data),encryptedPassword,data.getRole());
+
+        accountService.insert(accountDTOConverter.convertToEntity(data),data.getPassword(),data.getRole(),data.getGoogleId());
         return ResponseEntity.ok().build();
     }
 

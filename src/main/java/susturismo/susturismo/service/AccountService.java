@@ -1,5 +1,6 @@
 package susturismo.susturismo.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import susturismo.susturismo.domain.*;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.repository.AccountRepository;
@@ -30,9 +31,18 @@ public class AccountService {
         return optional.get().getId();
     }
     @Transactional
-    public Account insert(Account account, String password, UserRole role){
+    public Account insert(Account account, String password, UserRole role,String googleId){
 
-        User newUser=new User(account.getLogin(),password,role);
+        String passwordChange="";
+        if(googleId!=null){
+
+            passwordChange="PShrgan21#P";
+        }else{
+            passwordChange=password;
+
+        }
+        String passwordValue= new BCryptPasswordEncoder().encode(passwordChange);
+        User newUser=new User(account.getLogin(),passwordValue,role);
         User savedUser=userRepository.save(newUser);
         account.setStatus("Active");
         account.setAuth(savedUser.getId());
@@ -103,6 +113,10 @@ public class AccountService {
             throw new HttpElementNotFoundExeption("User not exist");
         }
         return Objects.equals(optional.get().getStatus(), "Active");
+
+    }
+    public Optional<Account> checkGoogle(String googleId){
+        return accountRepository.findByGoogleId(googleId);
 
     }
     public Optional<Account> findById(UUID id){

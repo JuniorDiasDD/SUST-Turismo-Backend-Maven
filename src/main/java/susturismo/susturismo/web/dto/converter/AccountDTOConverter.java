@@ -28,6 +28,7 @@ PortfolioDTOConverter portfolioDTOConverter;
         accountDTO.setName(account.getName());
         accountDTO.setStatus(account.getStatus());
         accountDTO.setTel(account.getTel());
+        accountDTO.setGoogleId(account.getGoogle_id());
 
         Set<PortfolioDTO> portfolioDTOS = account.getPortfolios().stream().map(portfolioDTOConverter::convertToDTO).collect(Collectors.toSet());
 
@@ -49,7 +50,7 @@ PortfolioDTOConverter portfolioDTOConverter;
             Set<Portfolio> portfolios = accountDTO.getPortfolios().stream().map(portfolioDTOConverter::convertToEntity).collect(Collectors.toSet());
             account.setPortfolios(portfolios);
         }
-
+        account.setGoogle_id(accountDTO.getGoogleId());
         return account;
     }
 

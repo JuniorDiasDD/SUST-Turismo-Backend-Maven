@@ -1,7 +1,6 @@
 package susturismo.susturismo.web.dto;
 
 import susturismo.susturismo.domain.UserRole;
-
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,6 +15,7 @@ public class AccountDTO implements DTO{
     private String email;
     private String status;
     Set<PortfolioDTO> portfolios;
+    private String googleId;
 
 
     public String getLogin() {
@@ -88,5 +88,13 @@ public class AccountDTO implements DTO{
 
     public void setPortfolios(Set<PortfolioDTO> portfolios) {
         this.portfolios = portfolios;
+    }
+
+    public String getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(String googleId) {
+        this.googleId = googleId;
     }
 }

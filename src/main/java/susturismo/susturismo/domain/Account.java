@@ -30,6 +30,9 @@ public class Account{
     @Column(name = "TEL", length = 64)
     private String tel;
 
+    @Column(name = "GOOGLE_ID", length = 254)
+    private String google_id;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "ACCOUNT_PORTFOLIO",
@@ -104,5 +107,13 @@ public class Account{
 
     public void setAuth(UUID auth) {
         this.auth = auth;
+    }
+
+    public String getGoogle_id() {
+        return google_id;
+    }
+
+    public void setGoogle_id(String google_id) {
+        this.google_id = google_id;
     }
 }

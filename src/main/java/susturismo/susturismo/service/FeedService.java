@@ -3,11 +3,9 @@ package susturismo.susturismo.service;
 import org.springframework.data.domain.Sort;
 import susturismo.susturismo.domain.Account;
 import susturismo.susturismo.domain.Feed;
-import susturismo.susturismo.domain.Noticia;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.repository.AccountRepository;
-import susturismo.susturismo.repository.CategoryRepository;
 import susturismo.susturismo.repository.FeedRepository;
 import susturismo.susturismo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,23 +24,36 @@ public class FeedService {
     UserRepository userRepository;
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    LikeFeedService likeFeedService;
+    @Autowired
+    CommentFeedService commentFeedService;
 
     public List<Feed> findAll(){
         List<Feed> list=feedRepository.findAll(Sort.by(Sort.Direction.DESC, "criadoEm"));
-
+        String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID id= userRepository.findByUsername(userName).get().getId();
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);
+
+            v.setCount_likes(likeFeedService.findAllByFeedId(v.getId()).size());
+            v.setUser_like(!likeFeedService.findByUserId(id,v.getId()));
+            v.setComments(commentFeedService.findAllByFeedId(v.getId()));
         });
 
         return list;
     }
     public List<Feed> findAllStatus(String status){
         List<Feed> list= feedRepository.findAllFeedStatus(status);
-
+        String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID id= userRepository.findByUsername(userName).get().getId();
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);
+            v.setCount_likes(likeFeedService.findAllByFeedId(v.getId()).size());
+            v.setUser_like(!likeFeedService.findByUserId(id,v.getId()));
+            v.setComments(commentFeedService.findAllByFeedId(v.getId()));
         });
 
         return list;
@@ -95,6 +106,11 @@ public class FeedService {
         Optional<Feed>feed= feedRepository.findById(id);
         Optional<Account>optional=accountRepository.findAccountByAuth(feed.get().getCriadoPor());
         optional.ifPresent(feed.get()::setAccount);
+        String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+        UUID user_id= userRepository.findByUsername(userName).get().getId();
+        feed.get().setCount_likes(likeFeedService.findAllByFeedId(feed.get().getId()).size());
+        feed.get().setUser_like(!likeFeedService.findByUserId(id,feed.get().getId()));
+        feed.get().setComments(commentFeedService.findAllByFeedId(feed.get().getId()));
         return feed;
     }
     public boolean delete(UUID id){

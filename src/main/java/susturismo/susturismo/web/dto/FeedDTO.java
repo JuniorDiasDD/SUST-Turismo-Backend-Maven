@@ -11,6 +11,10 @@ public class FeedDTO {
     private String status;
     private AccountDTO account;
     private LocalDateTime data;
+    private int likes;
+    private boolean user_like;
+
+    Set<CommentFeedDTO> comments;
 
     public LocalDateTime getData() {
         return data;
@@ -60,4 +64,27 @@ public class FeedDTO {
         this.account = account;
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public boolean isUser_like() {
+        return user_like;
+    }
+
+    public void setUser_like(boolean user_like) {
+        this.user_like = user_like;
+    }
+
+    public Set<CommentFeedDTO> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<CommentFeedDTO> comments) {
+        this.comments = comments;
+    }
 }

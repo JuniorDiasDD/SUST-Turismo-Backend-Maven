@@ -1,9 +1,7 @@
 package susturismo.susturismo.web.dto.converter;
 
 import susturismo.susturismo.domain.*;
-import susturismo.susturismo.web.dto.AccountDTO;
-import susturismo.susturismo.web.dto.CategoryDTO;
-import susturismo.susturismo.web.dto.FeedDTO;
+import susturismo.susturismo.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +15,8 @@ public class FeedDTOConverter {
     CategoryDTOConverter categoryDTOConverter;
     @Autowired
     AccountDTOConverter accountDTOConverter;
+    @Autowired
+    CommentFeedDTOConverter commentFeedDTOConverter;
 
     public FeedDTO convertToDTO(Feed feed) {
 
@@ -27,9 +27,14 @@ public class FeedDTOConverter {
         dto.setStatus(feed.getStatus());
         dto.setImage(feed.getImage());
         dto.setData(feed.getCriadoEm());
+        dto.setLikes(feed.getCount_likes());
+        dto.setUser_like(feed.isUser_like());
 
         AccountDTO accountDTO=accountDTOConverter.convertToDTO(feed.getAccount());
         dto.setAccount(accountDTO);
+
+        Set<CommentFeedDTO> commentFeedDTOS = feed.getComments().stream().map(commentFeedDTOConverter::convertToDTO).collect(Collectors.toSet());
+        dto.setComments(commentFeedDTOS);
         return dto;
 
     }

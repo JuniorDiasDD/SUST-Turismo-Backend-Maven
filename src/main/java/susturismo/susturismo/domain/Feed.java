@@ -1,6 +1,8 @@
 package susturismo.susturismo.domain;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "feed")
@@ -21,6 +23,13 @@ public class Feed extends BaseTable{
 
     @Transient
     Account account;
+    @Transient
+    private int count_likes;
+    @Transient
+    private boolean user_like;
+
+    @Transient
+    private List<CommentFeed> comments;
     public UUID getId() {
         return id;
     }
@@ -59,5 +68,29 @@ public class Feed extends BaseTable{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getCount_likes() {
+        return count_likes;
+    }
+
+    public void setCount_likes(int count_likes) {
+        this.count_likes = count_likes;
+    }
+
+    public boolean isUser_like() {
+        return user_like;
+    }
+
+    public void setUser_like(boolean user_like) {
+        this.user_like = user_like;
+    }
+
+    public List<CommentFeed> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentFeed> comments) {
+        this.comments = comments;
     }
 }

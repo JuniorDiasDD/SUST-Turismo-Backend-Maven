@@ -16,7 +16,7 @@ public class Noticia extends BaseTable{
     private UUID id;
 
     @Basic(optional = false)
-    @Column(name = "TITLE", length = 254)
+    @Column(name = "TITLE",columnDefinition="TEXT")
     private String title;
 
     @Column(name = "FONTE", length = 254)
@@ -50,6 +50,21 @@ public class Noticia extends BaseTable{
     Account account;
     @Transient
     Set<Noticia> semelhantes =new HashSet<>();
+
+    public Noticia() {
+    }
+
+    public Noticia(String title, String fonte, String description, String tags, String image, LocalDateTime date_publicacao, String status, Set<Category> category) {
+        this.title = title;
+        this.fonte = fonte;
+        this.description = description;
+        this.tags = tags;
+        this.image = image;
+        this.date_publicacao = date_publicacao;
+        this.status = status;
+        this.category = category;
+    }
+
     public UUID getId() {
         return id;
     }

@@ -29,4 +29,16 @@ public class ConfigController implements ConfigApi{
         configService.gerarFormation();
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Object> gerarEvents() {
+        configService.gerarEvents();
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Object> gerarNoticia() {
+        configService.gerarNoticia();
+        return ResponseEntity.ok().build();
+    }
 }

@@ -70,6 +70,22 @@ public class Event extends BaseTable{
 
     }
 
+    public Event(String title, String description, String organizer, LocalDateTime date_init, LocalDateTime date_finish, String hour_init, String hour_finish, String local, String status, String tags, String image, Float price, Set<Category> category) {
+        this.title = title;
+        this.description = description;
+        this.organizer = organizer;
+        this.date_init = date_init;
+        this.date_finish = date_finish;
+        this.hour_init = hour_init;
+        this.hour_finish = hour_finish;
+        this.local = local;
+        this.status = status;
+        this.tags = tags;
+        this.image = image;
+        this.price = price;
+        this.category = category;
+    }
+
     public UUID getId() {
         return id;
     }

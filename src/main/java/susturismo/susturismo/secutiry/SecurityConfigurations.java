@@ -26,7 +26,6 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/category/all").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/event/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/event").permitAll()
@@ -38,6 +37,10 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/v1/noticia/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/noticia").permitAll()
                         //.requestMatchers(HttpMethod.POST,"/events").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/formation/approve").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/event/approve").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/noticia/approve").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

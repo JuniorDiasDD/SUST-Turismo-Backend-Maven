@@ -2,8 +2,9 @@ package susturismo.susturismo.domain;
 
 public enum UserRole {
 
-    ADMIN("admin"),
-    USER("user");
+    ADMIN("gestor"),
+    USER("user"),
+    COOR("coordenador");
 
 
     private String role;

@@ -32,6 +32,8 @@ public interface EventApi {
 
     @PostMapping(path = "/active")
     ResponseEntity<Object> activeEvent(@RequestBody(required = false) RequestDTOList<UUID> request);
+    @PostMapping(path = "/approve")
+    ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTOList<UUID> request);
     @PostMapping(path = "/disable")
     ResponseEntity<Object> disableEvent(@RequestBody(required = false) RequestDTOList<UUID> request);
 

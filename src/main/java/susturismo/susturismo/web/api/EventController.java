@@ -148,6 +148,15 @@ public class EventController implements EventApi{
 
         return ResponseEntity.ok().build();
     }
+    public ResponseEntity<Object> approve(RequestDTOList<UUID> request) {
+        request.getRequest().forEach(value->{
+            if(eventService.updateStatus(value,"Active")){
+                throw new HttpUpdateFailedException("Error to approve event");
+            }
+        });
+
+        return ResponseEntity.ok().build();
+    }
 
     @Override
     public ResponseEntity<Object> disableEvent(RequestDTOList<UUID> request) {

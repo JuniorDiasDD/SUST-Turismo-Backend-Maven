@@ -33,6 +33,9 @@ public interface NoticiaApi {
 
     @PostMapping(path = "/active")
     ResponseEntity<Object> active(@RequestBody(required = false) RequestDTOList<UUID> request);
+
+    @PostMapping(path = "/approve")
+    ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTOList<UUID> request);
     @PostMapping(path = "/disable")
     ResponseEntity<Object> disable(@RequestBody(required = false) RequestDTOList<UUID> request);
 

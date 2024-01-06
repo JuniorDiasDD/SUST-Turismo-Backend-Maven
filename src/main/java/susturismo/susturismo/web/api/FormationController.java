@@ -109,6 +109,15 @@ public class FormationController implements FormationApi{
         });
         return ResponseEntity.ok().build();
     }
+    @Override
+    public ResponseEntity<Object> approve(RequestDTOList<UUID> request) {
+        request.getRequest().forEach(value->{
+            if(formationService.updateStatus(value,"Active")){
+                throw new HttpUpdateFailedException("Error to approve Formation");
+            }
+        });
+        return ResponseEntity.ok().build();
+    }
 
     @Override
     public ResponseEntity<Object> disable(RequestDTOList<UUID> request) {

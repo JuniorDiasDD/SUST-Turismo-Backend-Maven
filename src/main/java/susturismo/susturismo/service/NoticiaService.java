@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import susturismo.susturismo.domain.Account;
 import susturismo.susturismo.domain.Category;
 import susturismo.susturismo.domain.Noticia;
+import susturismo.susturismo.domain.User;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.repository.*;
@@ -67,9 +68,7 @@ public class NoticiaService {
         return list;
     }
     public Noticia insert(Noticia noticia){
-       /* if(noticiaRepository.findByTitle(noticia.getTitle()).isPresent()){
-            throw new HttpInsertFailedException("This Noticia already exists");
-        }*/
+
         noticia.getCategory().forEach(v->{
             Optional<Category> category=categoryRepository.findById(v.getId());
             if(category.isEmpty()){
@@ -77,10 +76,18 @@ public class NoticiaService {
             }
         });
         String userName=SecurityContextHolder.getContext().getAuthentication().getName();
-        UUID id= userRepository.findByUsername(userName).get().getId();
+        Optional<User> userOptional=userRepository.findByUsername(userName);
+        UUID id= userOptional.get().getId();
         noticia.setCriadoPor(id);
         noticia.setAlteradoPor(id);
-        noticia.setStatus("Active");
+
+        userOptional.get().getAuthorities().forEach(e->{
+            if(e.getAuthority().equals("ROLE_ADMIN")){
+                noticia.setStatus("Active");
+            }else{
+                noticia.setStatus("Pendente");
+            }
+        });
         if(noticia.getImage()==null){
             noticia.setImage("https://www.susturismo.com/img/sobrenos1.png");
         }

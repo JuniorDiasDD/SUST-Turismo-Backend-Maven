@@ -148,6 +148,16 @@ public class NoticiaController implements NoticiaApi{
 
         return ResponseEntity.ok().build();
     }
+    @Override
+    public ResponseEntity<Object> approve(RequestDTOList<UUID> request) {
+        request.getRequest().forEach(value->{
+            if(noticiaService.updateStatus(value,"Active")){
+                throw new HttpUpdateFailedException("Error to approve Noticia");
+            }
+        });
+
+        return ResponseEntity.ok().build();
+    }
 
     @Override
     public ResponseEntity<Object> disable(RequestDTOList<UUID> request) {

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
 public class AuthenticationController implements AuthenticationApi {
@@ -65,10 +66,18 @@ public class AuthenticationController implements AuthenticationApi {
         }
 
         UUID id= accountService.findByUserId(username);
-
+        Optional<User> userOptional=userRepository.findByUsername(username);
         var token=tokenService.generateToken((User)auth.getPrincipal());
+        AtomicReference<String> perfil= new AtomicReference<>("");
 
-        tokenDto=tokenDTOConverter.convertToDTO(username,token,id);
+        userOptional.get().getAuthorities().forEach(e->{
+            perfil.set(e.getAuthority());
+        });
+
+        if(!perfil.get().isEmpty()){
+            perfil.set(perfil.get().replace("ROLE_", ""));
+        }
+        tokenDto=tokenDTOConverter.convertToDTO(username,token,id,perfil.get());
 
       return ResponseEntity.ok(tokenDto);
     }
@@ -88,5 +97,6 @@ public class AuthenticationController implements AuthenticationApi {
         accountService.insert(accountDTOConverter.convertToEntity(data),data.getPassword(),data.getRole(),data.getGoogleId());
         return ResponseEntity.ok().build();
     }
+
 
 }

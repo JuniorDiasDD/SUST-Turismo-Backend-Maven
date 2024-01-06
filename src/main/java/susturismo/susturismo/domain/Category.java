@@ -26,6 +26,9 @@ public class Category extends BaseTable{
     private Set<Event> events;
 
     @ManyToMany(cascade = CascadeType.MERGE)
+    private Set<Formation> formation;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
     private Set<Feed> feeds;
 
     public Category(){}
@@ -74,5 +77,21 @@ public class Category extends BaseTable{
 
     public void setEvents(Set<Event> events) {
         this.events = events;
+    }
+
+    public Set<Formation> getFormation() {
+        return formation;
+    }
+
+    public void setFormation(Set<Formation> formation) {
+        this.formation = formation;
+    }
+
+    public Set<Feed> getFeeds() {
+        return feeds;
+    }
+
+    public void setFeeds(Set<Feed> feeds) {
+        this.feeds = feeds;
     }
 }

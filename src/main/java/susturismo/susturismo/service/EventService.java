@@ -87,10 +87,19 @@ public class EventService {
             event.setPrice((float) 0);
         }
         String userName= SecurityContextHolder.getContext().getAuthentication().getName();
-        UUID id= userRepository.findByUsername(userName).get().getId();
+
+        Optional<User> userOptional=userRepository.findByUsername(userName);
+        UUID id= userOptional.get().getId();
         event.setCriadoPor(id);
         event.setAlteradoPor(id);
-        event.setStatus("Active");
+
+        userOptional.get().getAuthorities().forEach(e->{
+            if(e.getAuthority().equals("ROLE_ADMIN")){
+                event.setStatus("Active");
+            }else{
+                event.setStatus("Pendente");
+            }
+        });
         if(event.getImage()==null){
             event.setImage("https://www.susturismo.com/img/sobrenos1.png");
         }

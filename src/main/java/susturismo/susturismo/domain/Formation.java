@@ -34,7 +34,14 @@ public class Formation extends BaseTable{
     private String link;
     @Column(name = "IMAGE",columnDefinition = "TEXT")
     private String image;
-public Formation(){}
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @JoinTable(
+            name = "FORMATION_CATEGORY",
+            joinColumns = @JoinColumn(name = "formation_id", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "ID"))
+    private Set<Category> category;
+
+    public Formation(){}
     public Formation(String title, String description, String objective, String responsible, String link, String image, Set<Category> category) {
         this.title = title;
         this.description = description;
@@ -45,12 +52,7 @@ public Formation(){}
         this.category = category;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    @JoinTable(
-            name = "FORMATION_CATEGORY",
-            joinColumns = @JoinColumn(name = "formation_id", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "ID"))
-    private Set<Category> category;
+
 
     public UUID getId() {
         return id;

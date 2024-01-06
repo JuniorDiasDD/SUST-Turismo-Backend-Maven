@@ -1,10 +1,7 @@
 package susturismo.susturismo.service;
 
 import org.springframework.data.domain.Sort;
-import susturismo.susturismo.domain.Category;
-import susturismo.susturismo.domain.Event;
-import susturismo.susturismo.domain.Feed;
-import susturismo.susturismo.domain.Formation;
+import susturismo.susturismo.domain.*;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
@@ -15,13 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class FormationService {
-
+    @Autowired
+    CategoryService categoryService;
     @Autowired
     FormationRepository formationRepository;
     @Autowired
@@ -39,17 +35,32 @@ public class FormationService {
         if(formationRepository.findByTitle(valueFormation.getTitle()).isPresent()){
             throw new HttpInsertFailedException("This Feed already exists");
         }
+        Set<Category> categorySet=new HashSet<>();
         valueFormation.getCategory().forEach(v->{
             Optional<Category> category=categoryRepository.findById(v.getId());
             if(category.isEmpty()){
                 throw new HttpElementNotFoundExeption("Category: "+v.getId()+" not exist");
+            }else{
+                categorySet.add(category.get());
             }
         });
+
+        valueFormation.setCategory(categorySet);
         String userName=SecurityContextHolder.getContext().getAuthentication().getName();
-        UUID id= userRepository.findByUsername(userName).get().getId();
+
+        Optional<User> userOptional=userRepository.findByUsername(userName);
+        UUID id= userOptional.get().getId();
         valueFormation.setCriadoPor(id);
         valueFormation.setAlteradoPor(id);
-        valueFormation.setStatus("Active");
+
+        userOptional.get().getAuthorities().forEach(e->{
+            if(e.getAuthority().equals("ROLE_ADMIN")){
+                valueFormation.setStatus("Active");
+            }else{
+                valueFormation.setStatus("Pendente");
+            }
+        });
+
         UUID uuid = UUID.randomUUID();
         valueFormation.setId(uuid);
         return formationRepository.save(valueFormation);

@@ -7,6 +7,7 @@ public class TokenDTO implements DTO {
     private String token;
     private String login;
     private UUID id;
+    private String perfil;
 
     public String getLogin() {
         return login;
@@ -30,6 +31,14 @@ public class TokenDTO implements DTO {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
 
     @Override

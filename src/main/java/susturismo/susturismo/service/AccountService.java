@@ -35,7 +35,6 @@ public class AccountService {
 
         String passwordChange="";
         if(googleId!=null){
-
             passwordChange="PShrgan21#P";
         }else{
             passwordChange=password;

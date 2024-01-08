@@ -91,7 +91,7 @@ public class ConfigService {
                 "\n" +
                 "A inspeção acontece após uma polémica gerada no país sobre um alegado salário de 300 mil escudos (2.720 euros) da primeira-dama, Débora Carvalho.\n" +
                 "\n" +
-                "O Presidente cabo-verdiano já tinha pedido um posicionamento do Tribunal de Contas e da Inspeção Geral das Finanças sobre a matéria, designadamente nas questões de legalidade, e anunciou que as regalias da companheira iam ser suspensas.\n" +
+                "O Presidente cabo-verdiano já tinha pedido um posicionamento do Tribunal de Contas e da Inspeção Geral das Finanças sobre a matéria,designadamente nas questões de legalidade, e anunciou que as regalias da companheira iam ser suspensas.\n" +
                 "\n" +
                 "José Maria Neves, antigo primeiro-ministro e eleito com o apoio do Partido Africano da Independência de Cabo Verde (PAICV, atualmente na oposição), anunciou ainda que, se for entendido que haverá algum montante a repor, \"será feito de imediato\".", "news", "https://www.susturismo.com/img/sobrenos1.png", data, "Active", categorySet) );
         noticiaService.insert(new Noticia("Preços dos combustíveis descem 4,49% em Cabo Verde", "noticia", " preço do gasóleo desce 4,95% para 123 escudos cabo-verdianos (cerca de 1,12 euros) o litro e a gasolina 4,28% para 132 escudos, de acordo com a nova tabela dos preços dos produtos petrolíferos regulados, já a vigorar.\n" +

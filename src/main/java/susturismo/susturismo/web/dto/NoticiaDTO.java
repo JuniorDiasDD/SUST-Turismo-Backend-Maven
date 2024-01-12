@@ -16,6 +16,7 @@ public class NoticiaDTO {
     private AccountDTO account;
     Set<CategoryDTO> categories;
     Set<NoticiaDTO> semelhantes;
+    Set<String> galery;
     public UUID getId() {
         return id;
     }
@@ -102,5 +103,13 @@ public class NoticiaDTO {
 
     public void setSemelhantes(Set<NoticiaDTO> semelhantes) {
         this.semelhantes = semelhantes;
+    }
+
+    public Set<String> getGalery() {
+        return galery;
+    }
+
+    public void setGalery(Set<String> galery) {
+        this.galery = galery;
     }
 }

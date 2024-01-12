@@ -3,8 +3,10 @@ package susturismo.susturismo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import susturismo.susturismo.domain.*;
+import susturismo.susturismo.repository.EquipaRepository;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 
 @Service
@@ -20,6 +22,8 @@ public class ConfigService {
 
     @Autowired
     EventService eventService;
+    @Autowired
+    EquipaService equipaService;
 
     public boolean gerarCategory(){
         categoryService.insert(new Category("Desporto","..."));
@@ -50,29 +54,254 @@ public class ConfigService {
         if(category.isPresent()) {
             categorySet.add(category.get());
         }
-        formationService.insert(new Formation("Cooperação Universidade-Empresa e novos serviços universitários para orientação e tutoria estudantil","Cooperação Universidade-Empresa e novos serviços universitários para orientação e tutoria estudantil, em colaboração com o setor empresarial: Propor e testar um modelo de colaboração estável entre Universidades e atores públicos e privados relacionados com o Turismo, especialmente tendo em conta a participação das comunidades locais nos territórios com maior potencial para a atividade turística.","Estudantes","André Alves","http://portalacademico.homelinux.org:49152/moodle/course/view.php?id=615","https://www.susturismo.com/img/sobrenos1.png",categorySet));
-        formationService.insert(new Formation("Novas metodologias de formação prática e estudo de casos de sucesso de turismo sustentável","Novas metodologias de formação prática e estudo de casos de sucesso de turismo sustentável, com especial ênfase na abordagem do género e empoderamento das mulheres.","Estudantes","André Alves","http://portalacademico.homelinux.org:49152/moodle/course/view.php?id=614","https://www.susturismo.com/img/sobrenos1.png",categorySet));
-        formationService.insert(new Formation("Curso de especialização","Curso de especialização, numa base piloto, utilizando uma metodologia inovadora baseada em: Formação mista (online e presencial); Webinars especializados; Seminários internacionais; e Elaboração de trabalhos de conclusão de curso pelos alunos.","Estudantes","André Alves","http://portalacademico.homelinux.org:49152/moodle/course/view.php?id=613","https://www.susturismo.com/img/sobrenos1.png",categorySet));
-        formationService.insert(new Formation("Educação empreendedora em Turismo Sustentável","Educação empreendedora em Turismo Sustentável: Conceber um Curso de Especialização modular, focado em Turismo Inovador Sustentável, que é ministrado pelas Universidades, mas suficientemente flexível para ser adaptado tanto aos estudantes (para a sua especialização e a melhoria da empregabilidade no setor) como a pessoas que já trabalham no setor de turismo (melhoria contínua de habilidades) e pessoas interessadas de instituições públicas e outros grupos de interesse. O curso deve necessariamente incluir novos paradigmas e conteúdos inovadores relacionados com o cuidado com o meio ambiente, digitalização e uso de tecnologias, proteção social e cultural das comunidades e identidades, gestão da diversidade, abordagem de género e inclusão.","Estudantes","André Alves","http://portalacademico.homelinux.org:49152/moodle/course/view.php?id=612","https://www.susturismo.com/img/sobrenos1.png",categorySet));
+        formationService.insert(new Formation("Cooperação Universidade-Empresa e novos serviços universitários para orientação e tutoria estudantil","Cooperação Universidade-Empresa e novos serviços universitários para orientação e tutoria estudantil, em colaboração com o setor empresarial: Propor e testar um modelo de colaboração estável entre Universidades e atores públicos e privados relacionados com o Turismo, especialmente tendo em conta a participação das comunidades locais nos territórios com maior potencial para a atividade turística.","Estudantes","André Alves","http://portalacademico.homelinux.org:49152/moodle/course/view.php?id=615","/img/sobrenos1.png",categorySet));
+        formationService.insert(new Formation("Novas metodologias de formação prática e estudo de casos de sucesso de turismo sustentável","Novas metodologias de formação prática e estudo de casos de sucesso de turismo sustentável, com especial ênfase na abordagem do género e empoderamento das mulheres.","Estudantes","André Alves","http://portalacademico.homelinux.org:49152/moodle/course/view.php?id=614","/img/sobrenos1.png",categorySet));
+        formationService.insert(new Formation("Curso de especialização","Curso de especialização, numa base piloto, utilizando uma metodologia inovadora baseada em: Formação mista (online e presencial); Webinars especializados; Seminários internacionais; e Elaboração de trabalhos de conclusão de curso pelos alunos.","Estudantes","André Alves","http://portalacademico.homelinux.org:49152/moodle/course/view.php?id=613","/img/sobrenos1.png",categorySet));
+        formationService.insert(new Formation("Educação empreendedora em Turismo Sustentável","Educação empreendedora em Turismo Sustentável: Conceber um Curso de Especialização modular, focado em Turismo Inovador Sustentável, que é ministrado pelas Universidades, mas suficientemente flexível para ser adaptado tanto aos estudantes (para a sua especialização e a melhoria da empregabilidade no setor) como a pessoas que já trabalham no setor de turismo (melhoria contínua de habilidades) e pessoas interessadas de instituições públicas e outros grupos de interesse. O curso deve necessariamente incluir novos paradigmas e conteúdos inovadores relacionados com o cuidado com o meio ambiente, digitalização e uso de tecnologias, proteção social e cultural das comunidades e identidades, gestão da diversidade, abordagem de género e inclusão.","Estudantes","André Alves","http://portalacademico.homelinux.org:49152/moodle/course/view.php?id=612","/img/sobrenos1.png",categorySet));
 
         return true;
     }
     public boolean gerarEvents(){
 
-        Optional<Category> category=categoryService.findByName("Universidade");
+        Optional<Category> category=categoryService.findByName("Ambiente");
         Set<Category> categorySet=new HashSet<>();
         if(category.isPresent()) {
             categorySet.add(category.get());
         }
 
-        LocalDateTime data = LocalDateTime.now();
-        eventService.insert(new Event("Workshop","Workshop para as descubertas da filosofia moderna do sec 21", "Pedro Costa", data,data, "10:00", "12:30", "Universidade Jean Piaget", "Active","formação", "https://www.susturismo.com/img/sobrenos1.png", (float) 0, categorySet));
-        eventService.insert(new Event("Palestra","Palestra abordando as polemicas sociais", "Antonia Semedo", data,data, "10:00", "12:30", "Universidade Jean Piaget", "Active","formação", "https://www.susturismo.com/img/sobrenos1.png", (float) 0, categorySet));
-        eventService.insert(new Event("Intercambio","Intercambio internacional de alunos de varios paises da Europa com o principal objetivo de estreitar o relacionamento inter-escolar", "Antonio Borges", data,data, "8:00", "17:30", "Universidade Jean Piaget", "Active","formação", "https://www.susturismo.com/img/sobrenos1.png", (float) 0, categorySet));
+
+        LocalDateTime specificInit = LocalDateTime.of(2023, Month.OCTOBER, 11, 9, 0, 0);
+        LocalDateTime specificFinish = LocalDateTime.of(2023, Month.OCTOBER, 13, 18, 30, 0);
+        eventService.insert(new Event("1 Encontro Internacional: Projecto Sust Turism: Responsabilidade E Sustentabilidade Turística","Local e data\n" +
+                "O encontro será realizado na ILHA DE SANTIAGO, Cabo Verde, 11 a 13 de Outubro 2023, no Hotel Trópico,\n" +
+                "localizado em Cidade da Praia.\n" +
+                "Alojamento\n" +
+                "Os participantes serão alojados no Hotel Trópico localizado em Cidade da Praia, com as seguintes tarifas\n" +
+                "por quarto:\n" +
+                "Quarto Individual 100€\n" +
+                "Quarto duplo: por consulta\n" +
+                "Despesa\n" +
+                "As despesas decorrentes da participação no referido evento, durante os dias em que a atividade for realizada,\n" +
+                "serão suportadas por cada universidade parceira e incluídas nos respetivos orçamentos de projeto Sust Turismo.\n" +
+                "No caso de um participante prolongar voluntariamente a sua estadia, as despesas do mesmo serão por ele\n" +
+                "suportadas.\n" +
+                "Clima\n" +
+                "A temperatura varia entre 28 ° e 30 ° Celsius, havendo probabilidade de chover, devem trazer roupa\n" +
+                "adequada.\n" +
+                "Corrente elétrica\n" +
+                "A corrente elétrica nas instalações do hotel é de 220 volts.\n" +
+                "Código telefónico\n" +
+                "O código internacional de CV é 238.\n" +
+                "Taxa de aeroporto\n" +
+                "30 euros da taxa de aeroporto.\n" +
+                "Moeda\n" +
+                "\n" +
+                "A moeda de circulação é o Escudo. A taxa de câmbio (compra) é fixa, 1 EUR$ = 110 Escudos Cabo-\n" +
+                "Verdianos. Aceitam-se Euros e Dólares em quase todos os sítios como Restaurantes, algumas lojas, não\n" +
+                "\n" +
+                "sendo a norma, aconselha-se estar provido com alguns Escudos.\n" +
+                "Pessoa de contacto\n" +
+                "Logística de Hospedagem:\n" +
+                "Sandra Gonçalves Sales Manager – Pestana Trópico Hotel\n" +
+                "Pestana Tropico Hotel | www.pestana.com | www.pestanapriority.com\n" +
+                "Cidade da Praia C.P. 413, Santiago | Cabo Verde\n" +
+                "E-mail: sandra.goncalves@pestana.com | Tel: +238 261 42 00 | +238 957 86 99", "Universidades", specificInit,specificFinish, "09:00", "18:30", "ILHA DE SANTIAGO, Cabo Verde", "Active","formação", "/img/sobrenos1.png", (float) 0, categorySet));
 
         return true;
     }
 
+    public boolean gerarEquipa(){
+        equipaService.insert(  new Equipa("Helena Santos Rodrigues",
+                   "profile.png",
+              "#",
+                 "#",
+                 "#",
+                "hsantos@estg.ipvc.pt",
+                 "IPVC",
+                "Coordenadora GERAL projeto",
+                 "#"
+        ));
+              equipaService.insert( new Equipa(
+             "Nuno Domingos",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "IPVC",
+                 "",
+                 "#"
+        ));
+              equipaService.insert(  new Equipa(
+             "Sónia Carvalho",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "IPVC",
+                 "",
+                 "#"
+                ));
+              equipaService.insert( new Equipa(
+             "Juary Nobre",
+                     "Juary Nobre.jpeg",
+                 "https://www.instagram.com/juari_nobre/",
+                 "#",
+                 "#",
+                        "",
+                 "Piaget",
+                 "Coordenador Piaget e Comité de Gestão Cabo Verde",
+                 "#"
+                ));
+              equipaService.insert( new Equipa(
+             "José Carlos",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "Piaget",
+                 "",
+                 "#"));
+              equipaService.insert( new Equipa(
+             "Nadir",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "ISCEE",
+                 "Coordenador Iscee",
+                 "#"
+                ));
+              equipaService.insert(  new Equipa(
+             "Américo",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "ISCEE",
+                 "",
+                 "#"
+                ));
+              equipaService.insert(  new Equipa(
+             "Lola Herrero",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "ESCP",
+                 "Coordenadora",
+                 "#"
+                ));
+              equipaService.insert(  new Equipa(
+             "Miguel Silva",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "ESCP",
+                 "",
+                 "#"
+                ));
+              equipaService.insert(new Equipa(
+             "José Maria Alonso",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "KOAN",
+                 "Coordenador",
+                 "#"
+                ));
+              equipaService.insert(  new Equipa(
+             "Adriana Hurtado",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "KOAN",
+                 "",
+                 "#"
+                        ));
+              equipaService.insert(  new Equipa(
+             "Juan Chousa",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "USC",
+                 "",
+                 "#"
+                ));
+              equipaService.insert( new Equipa(
+             "M Angeles",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "USC",
+                 "Coordenadora",
+                 "#"
+                ));
+              equipaService.insert(   new Equipa(
+             "Ana Duarte",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "LUSIADA BENGUELA",
+                 "Coordenadora",
+                 "#"
+                ));
+              equipaService.insert(   new Equipa(
+             "Edgar Manuel ",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "LUSIADA BENGUELA",
+                 "",
+                 "#"
+                        ));
+              equipaService.insert(    new Equipa(
+             "Celso Inácio",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "LUSIADA HUAMBO",
+                 "Coordenador",
+                 "#"
+                        ));
+              equipaService.insert(     new Equipa(
+             "Paulino Cossengue",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "LUSIADA HUAMBO",
+                 "",
+                 "#"
+                ));
+              equipaService.insert(   new Equipa(
+             "Alfredo Nóre",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "UNIMBE",
+                 "Coordenador",
+                 "#"
+                ));
+              equipaService.insert(  new Equipa(
+             "Celso Manuel",
+                     "profile.png",
+                 "#",
+                 "#",
+                 "#","",
+                 "UNIMBE",
+                 "",
+                 "#"));
+        return true;
+    }
     public boolean gerarNoticia(){
 
         Optional<Category> category=categoryService.findByName("Mundo");
@@ -93,14 +322,14 @@ public class ConfigService {
                 "\n" +
                 "O Presidente cabo-verdiano já tinha pedido um posicionamento do Tribunal de Contas e da Inspeção Geral das Finanças sobre a matéria,designadamente nas questões de legalidade, e anunciou que as regalias da companheira iam ser suspensas.\n" +
                 "\n" +
-                "José Maria Neves, antigo primeiro-ministro e eleito com o apoio do Partido Africano da Independência de Cabo Verde (PAICV, atualmente na oposição), anunciou ainda que, se for entendido que haverá algum montante a repor, \"será feito de imediato\".", "news", "https://www.susturismo.com/img/sobrenos1.png", data, "Active", categorySet) );
+                "José Maria Neves, antigo primeiro-ministro e eleito com o apoio do Partido Africano da Independência de Cabo Verde (PAICV, atualmente na oposição), anunciou ainda que, se for entendido que haverá algum montante a repor, \"será feito de imediato\".", "news", "/img/sobrenos1.png", data, "Active", categorySet) );
         noticiaService.insert(new Noticia("Preços dos combustíveis descem 4,49% em Cabo Verde", "noticia", " preço do gasóleo desce 4,95% para 123 escudos cabo-verdianos (cerca de 1,12 euros) o litro e a gasolina 4,28% para 132 escudos, de acordo com a nova tabela dos preços dos produtos petrolíferos regulados, já a vigorar.\n" +
                 "\n" +
                 "A ARME indicou ainda que o preço do gás butano é a excepção e sobe, com um aumento de 0,97%.\n" +
                 "\n" +
                 "Com isso, as garrafas de gás de 12,5 quilos passam a custar 1.814 escudos (cerca de 16,45 euros).\n" +
                 "\n" +
-                "Comparativamente ao período homólogo (janeiro de 2023), a variação média dos preços dos combustíveis corresponde a uma descida de 7,84%.", "combustivel", "https://www.susturismo.com/img/sobrenos1.png", data, "Active", categorySet) );
+                "Comparativamente ao período homólogo (janeiro de 2023), a variação média dos preços dos combustíveis corresponde a uma descida de 7,84%.", "combustivel", "/img/sobrenos1.png", data, "Active", categorySet) );
 
         noticiaService.insert(new Noticia("Cabo Verde. Hospital vai receber 27 mil euros/ano das obrigações verdes", "noticia", "nualmente será depositado na conta do Hospital Universitário Agostinho Neto (HUAN) um montante de cerca de 3,05 milhões de escudos (27,67 mil euros), o que perfaz cerca de 9,16 milhões de escudos (83,05 mil euros) tendo em conta que a maturidade do empréstimo é de três anos\", afirmou o presidente da Bolsa de Valores de Cabo Verde (BVC), Miguel Monteiro.\n" +
                 "\n" +
@@ -128,7 +357,7 @@ public class ConfigService {
                 "\n" +
                 "O banco apresenta-se como o terceiro maior de Cabo Verde, é liderado pelo grupo iib do Bahrain e participado em 10% pelo português Novo Banco.\n" +
                 "\n" +
-                "A última oferta pública de subscrição de obrigações na BVC ocorreu em janeiro de 2014, tendo como emitente a Imobiliária, Fundiária e Habitat (IFH, empresa estatal).", "Saude", "https://www.susturismo.com/img/sobrenos1.png", data, "Active", categorySet) );
+                "A última oferta pública de subscrição de obrigações na BVC ocorreu em janeiro de 2014, tendo como emitente a Imobiliária, Fundiária e Habitat (IFH, empresa estatal).", "Saude", "/img/sobrenos1.png", data, "Active", categorySet) );
 
 
         return true;

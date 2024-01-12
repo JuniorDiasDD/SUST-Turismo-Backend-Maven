@@ -29,6 +29,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/v1/category/all").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/event/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/event").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/equipa").permitAll()
                       //  .requestMatchers(HttpMethod.GET, "/api/v1/feed/*").permitAll()
                         //.requestMatchers(HttpMethod.GET, "/api/v1/feed").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/formation/*").permitAll()

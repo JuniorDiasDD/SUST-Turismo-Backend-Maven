@@ -17,4 +17,6 @@ public interface ConfigApi {
     ResponseEntity<Object> gerarEvents();
     @GetMapping(path = "/noticia")
     ResponseEntity<Object> gerarNoticia();
+    @GetMapping(path = "/equipa")
+    ResponseEntity<Object> gerarEquipa();
 }

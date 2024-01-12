@@ -34,8 +34,11 @@ public class NoticiaDTOConverter {
         dto.setTitle(noticia.getTitle());
         dto.setTags(noticia.getTags());
         dto.setImage(noticia.getImage());
-        Set<CategoryDTO> categoryDTOS = noticia.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
-        dto.setCategories(categoryDTOS);
+        if(noticia.getCategory()!=null && !noticia.getCategory().isEmpty()){
+            Set<CategoryDTO> categoryDTOS = noticia.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
+            dto.setCategories(categoryDTOS);
+        }
+
 
 
     if(!noticia.getSemelhantes().isEmpty()){
@@ -48,7 +51,9 @@ public class NoticiaDTOConverter {
     }
         AccountDTO accountDTO=accountDTOConverter.convertToDTO(noticia.getAccount());
         dto.setAccount(accountDTO);
-
+        if(!noticia.getGalery().isEmpty()){
+            dto.setGalery(noticia.getGalery());
+        }
         return dto;
 
     }
@@ -65,9 +70,13 @@ public class NoticiaDTOConverter {
         dto.setTitle(noticia.getTitle());
         dto.setTags(noticia.getTags());
         dto.setImage(noticia.getImage());
-        Set<CategoryDTO> categoryDTOS = noticia.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
-        dto.setCategories(categoryDTOS);
-
+        if(noticia.getCategory()!=null && !noticia.getCategory().isEmpty()){
+            Set<CategoryDTO> categoryDTOS = noticia.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
+            dto.setCategories(categoryDTOS);
+        }
+        if(!noticia.getGalery().isEmpty()){
+            dto.setGalery(noticia.getGalery());
+        }
         return dto;
 
     }
@@ -82,12 +91,14 @@ public class NoticiaDTOConverter {
         noticia.setTitle(dto.getTitle());
         noticia.setTags(dto.getTags());
         noticia.setImage(dto.getImage());
-        if(dto.getCategories()!=null &&!dto.getCategories().isEmpty()){
+        if(dto.getCategories()!=null && !dto.getCategories().isEmpty()){
             Set<Category> categories = dto.getCategories().stream().map(categoryDTOConverter::convertToEntity).collect(Collectors.toSet());
             noticia.setCategory(categories);
         }
 
-
+        if(!dto.getGalery().isEmpty()){
+            noticia.setGalery(dto.getGalery());
+        }
         return noticia;
 
     }

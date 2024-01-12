@@ -1,5 +1,6 @@
 package susturismo.susturismo.service;
 
+import jakarta.persistence.Transient;
 import org.springframework.data.domain.Sort;
 import susturismo.susturismo.domain.*;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -24,6 +26,8 @@ public class EventService {
     EventRepository eventRepository;
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    GaleryService galeryService;
 
     public List<Event> findAll(){
         List<Event> list=eventRepository.findAll(Sort.by(Sort.Direction.DESC, "criadoEm"));
@@ -34,7 +38,13 @@ public class EventService {
             if(v.getPrice()==null){
                 v.setPrice((float) 0);
             }
+
+            List<Galery> galeryList=galeryService.findAllByReference(v.getId());
+            Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+            v.setGalery(galeryListString);
+
         });
+
         return list;
     }
     public List<Event> findAllUser(){
@@ -49,6 +59,9 @@ public class EventService {
             if(v.getPrice()==null){
                 v.setPrice((float) 0);
             }
+            List<Galery> galeryList=galeryService.findAllByReference(v.getId());
+            Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+            v.setGalery(galeryListString);
         });
         return list;
     }
@@ -61,6 +74,9 @@ public class EventService {
             if(v.getPrice()==null){
                 v.setPrice((float) 0);
             }
+            List<Galery> galeryList=galeryService.findAllByReference(v.getId());
+            Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+            v.setGalery(galeryListString);
         });
         return list;
     }
@@ -73,16 +89,23 @@ public class EventService {
             if(v.getPrice()==null){
                 v.setPrice((float) 0);
             }
+            List<Galery> galeryList=galeryService.findAllByReference(v.getId());
+            Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+            v.setGalery(galeryListString);
         });
         return list;
     }
+
+    @Transient
     public Event insert(Event event){
-        event.getCategory().forEach(v->{
-            Optional<Category> category=categoryRepository.findById(v.getId());
-            if(category.isEmpty()){
-                throw new HttpElementNotFoundExeption("Category: "+v.getId()+" not exist");
-            }
-        });
+        if(event.getCategory()!=null && !event.getCategory().isEmpty()) {
+            event.getCategory().forEach(v -> {
+                Optional<Category> category = categoryRepository.findById(v.getId());
+                if (category.isEmpty()) {
+                    throw new HttpElementNotFoundExeption("Category: " + v.getId() + " not exist");
+                }
+            });
+        }
         if(event.getPrice()==null){
             event.setPrice((float) 0);
         }
@@ -101,10 +124,19 @@ public class EventService {
             }
         });
         if(event.getImage()==null){
-            event.setImage("https://www.susturismo.com/img/sobrenos1.png");
+            event.setImage("/img/sobrenos1.png");
         }
 
-        return eventRepository.save(event);
+
+        Event eventSaved=eventRepository.save(event);
+
+        if(eventSaved!=null){
+            if(!event.getGalery().isEmpty()){
+                galeryService.insert(eventSaved.getId(),event.getGalery(),id);
+            }
+        }
+
+        return eventSaved;
     }
 
     public Event update(Event event){

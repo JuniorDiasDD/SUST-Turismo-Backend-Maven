@@ -39,9 +39,10 @@ public class EventDTOConverter {
         eventDTO.setLocal(event.getLocal());
         eventDTO.setTitle(event.getTitle());
         eventDTO.setPrice(event.getPrice());
-        Set<CategoryDTO> categoryDTOS = event.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
-        eventDTO.setCategories(categoryDTOS);
-
+        if(event.getCategory()!=null && !event.getCategory().isEmpty()) {
+            Set<CategoryDTO> categoryDTOS = event.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
+            eventDTO.setCategories(categoryDTOS);
+        }
         AccountDTO accountDTO=accountDTOConverter.convertToDTO(event.getAccount());
         eventDTO.setAccount(accountDTO);
         if(!event.getSemelhantes().isEmpty()){
@@ -51,6 +52,9 @@ public class EventDTOConverter {
             });
             eventDTO.setSemelhantes(eventDTOS);
 
+        }
+        if(!event.getGalery().isEmpty()){
+            eventDTO.setGalery(event.getGalery());
         }
         return eventDTO;
 
@@ -72,8 +76,15 @@ public class EventDTOConverter {
         eventDTO.setLocal(event.getLocal());
         eventDTO.setTitle(event.getTitle());
         eventDTO.setPrice(event.getPrice());
+        if (event.getCategory()!=null && !event.getCategory().isEmpty()) {
+
+
         Set<CategoryDTO> categoryDTOS = event.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
         eventDTO.setCategories(categoryDTOS);
+    }
+        if(!event.getGalery().isEmpty()){
+            eventDTO.setGalery(eventDTO.getGalery());
+        }
         return eventDTO;
 
     }
@@ -96,6 +107,10 @@ public class EventDTOConverter {
         if(eventDTO.getCategories()!=null &&!eventDTO.getCategories().isEmpty()){
             Set<Category> categories = eventDTO.getCategories().stream().map(categoryDTOConverter::convertToEntity).collect(Collectors.toSet());
             event.setCategory(categories);
+        }
+
+        if(!eventDTO.getGalery().isEmpty()){
+            event.setGalery(eventDTO.getGalery());
         }
 
         return event;

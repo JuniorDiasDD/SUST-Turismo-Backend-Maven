@@ -4,15 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import susturismo.susturismo.domain.Account;
-import susturismo.susturismo.domain.Category;
-import susturismo.susturismo.domain.Noticia;
-import susturismo.susturismo.domain.User;
+import susturismo.susturismo.domain.*;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.repository.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class NoticiaService {
@@ -25,13 +23,17 @@ public class NoticiaService {
     CategoryRepository categoryRepository;
     @Autowired
     AccountRepository accountRepository;
-
+    @Autowired
+    GaleryService galeryService;
     public List<Noticia> findAll(){
         List<Noticia> list=noticiaRepository.findAll(Sort.by(Sort.Direction.DESC, "criadoEm"));
 
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);
+            List<Galery> galeryList=galeryService.findAllByReference(v.getId());
+            Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+            v.setGalery(galeryListString);
         });
 
         return list;
@@ -42,6 +44,9 @@ public class NoticiaService {
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);
+            List<Galery> galeryList=galeryService.findAllByReference(v.getId());
+            Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+            v.setGalery(galeryListString);
         });
 
         return list;
@@ -53,6 +58,9 @@ public class NoticiaService {
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);
+            List<Galery> galeryList=galeryService.findAllByReference(v.getId());
+            Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+            v.setGalery(galeryListString);
         });
 
         return list;
@@ -63,18 +71,23 @@ public class NoticiaService {
         list.forEach(v->{
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
             optional.ifPresent(v::setAccount);
+            List<Galery> galeryList=galeryService.findAllByReference(v.getId());
+            Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+            v.setGalery(galeryListString);
         });
 
         return list;
     }
     public Noticia insert(Noticia noticia){
 
-        noticia.getCategory().forEach(v->{
-            Optional<Category> category=categoryRepository.findById(v.getId());
-            if(category.isEmpty()){
-                throw new HttpElementNotFoundExeption("Category: "+v.getId()+" not exist");
-            }
-        });
+        if(noticia.getCategory()!=null && !noticia.getCategory().isEmpty()) {
+            noticia.getCategory().forEach(v -> {
+                Optional<Category> category = categoryRepository.findById(v.getId());
+                if (category.isEmpty()) {
+                    throw new HttpElementNotFoundExeption("Category: " + v.getId() + " not exist");
+                }
+            });
+        }
         String userName=SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> userOptional=userRepository.findByUsername(userName);
         UUID id= userOptional.get().getId();
@@ -91,7 +104,16 @@ public class NoticiaService {
         if(noticia.getImage()==null){
             noticia.setImage("https://www.susturismo.com/img/sobrenos1.png");
         }
-        return noticiaRepository.save(noticia);
+        Noticia noticiaSaved= noticiaRepository.save(noticia);
+
+
+        if(noticiaSaved!=null){
+            if(!noticia.getGalery().isEmpty()){
+                galeryService.insert(noticiaSaved.getId(),noticia.getGalery(),id);
+            }
+        }
+
+        return noticiaSaved;
     }
 
     public Noticia update(Noticia noticia){

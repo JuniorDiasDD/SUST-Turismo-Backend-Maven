@@ -65,7 +65,8 @@ public class Event extends BaseTable{
     Account account;
     @Transient
     Set<Event>semelhantes=new HashSet<>();
-
+    @Transient
+    Set<String>galery=new HashSet<>();
     public Event(){
 
     }
@@ -212,5 +213,13 @@ public class Event extends BaseTable{
 
     public void setSemelhantes(Set<Event> semelhantes) {
         this.semelhantes = semelhantes;
+    }
+
+    public Set<String> getGalery() {
+        return galery;
+    }
+
+    public void setGalery(Set<String> galery) {
+        this.galery = galery;
     }
 }

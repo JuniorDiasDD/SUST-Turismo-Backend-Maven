@@ -22,6 +22,7 @@ public class EventDTO {
     private AccountDTO account;
     Set<CategoryDTO> categories;
     Set<EventDTO> semelhantes;
+    Set<String> galery;
 
     public UUID getId() {
         return id;
@@ -149,5 +150,13 @@ public class EventDTO {
 
     public void setSemelhantes(Set<EventDTO> semelhantes) {
         this.semelhantes = semelhantes;
+    }
+
+    public Set<String> getGalery() {
+        return galery;
+    }
+
+    public void setGalery(Set<String> galery) {
+        this.galery = galery;
     }
 }

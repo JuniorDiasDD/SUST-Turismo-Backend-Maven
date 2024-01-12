@@ -41,4 +41,9 @@ public class ConfigController implements ConfigApi{
         configService.gerarNoticia();
         return ResponseEntity.ok().build();
     }
+    @Override
+    public ResponseEntity<Object> gerarEquipa() {
+        configService.gerarEquipa();
+        return ResponseEntity.ok().build();
+    }
 }

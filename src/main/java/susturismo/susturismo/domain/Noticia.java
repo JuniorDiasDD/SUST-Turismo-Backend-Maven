@@ -50,7 +50,8 @@ public class Noticia extends BaseTable{
     Account account;
     @Transient
     Set<Noticia> semelhantes =new HashSet<>();
-
+    @Transient
+    Set<String>galery=new HashSet<>();
     public Noticia() {
     }
 
@@ -151,5 +152,13 @@ public class Noticia extends BaseTable{
 
     public void setSemelhantes(Set<Noticia> semelhantes) {
         this.semelhantes = semelhantes;
+    }
+
+    public Set<String> getGalery() {
+        return galery;
+    }
+
+    public void setGalery(Set<String> galery) {
+        this.galery = galery;
     }
 }

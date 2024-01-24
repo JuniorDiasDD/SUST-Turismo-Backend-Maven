@@ -18,9 +18,9 @@ public interface AccountApi {
     @PutMapping(path = "")
     ResponseEntity<ResponseDTO<AccountDTO>> update(@RequestBody(required = false) RequestDTO<AccountDTO> request);
     @PostMapping(path = "/active")
-    ResponseEntity<Object> active(@RequestBody(required = false) RequestDTOList<UUID> request);
+    ResponseEntity<Object> active(@RequestBody(required = false) RequestDTO<AccountDTO> request);
     @PostMapping(path = "/disable")
-    ResponseEntity<Object> disable(@RequestBody(required = false) RequestDTOList<UUID> request);
+    ResponseEntity<Object> disable(@RequestBody(required = false) RequestDTO<AccountDTO> request);
     @PostMapping(path = "/remove")
     ResponseEntity<Object> remove(@RequestBody(required = false) RequestDTO<AccountDTO> request);
     @GetMapping(path = "/{id}")

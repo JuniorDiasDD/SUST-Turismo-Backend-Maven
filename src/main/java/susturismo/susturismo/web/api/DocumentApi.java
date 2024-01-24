@@ -18,8 +18,14 @@ public interface DocumentApi {
     public ResponseEntity<ResponseDTOList<DocumentDTO>> findAll(@RequestBody(required = false) RequestDTOList<DocumentDTO> request);
     @GetMapping(path = "/my")
     public ResponseEntity<ResponseDTOList<DocumentDTO>> findAllByUser(@RequestBody(required = false) RequestDTOList<DocumentDTO> request);
+    @GetMapping(path = "/{id}")
+    ResponseEntity<ResponseDTO<DocumentDTO>> findByID(
+            @PathVariable(value = "id") UUID id,
+            @RequestBody(required = false) RequestDTO<DocumentDTO> request);
     @PostMapping(path = "")
     ResponseEntity<ResponseDTO<DocumentDTO>> insert(@RequestBody(required = false) @Valid RequestDTO<DocumentDTO> request);
+    @PutMapping(path = "")
+    ResponseEntity<ResponseDTO<DocumentDTO>> edit(@RequestBody(required = false) @Valid RequestDTO<DocumentDTO> request);
     @DeleteMapping(path = "/{id}")
     ResponseEntity<ResponseDTO<DocumentDTO>> delete(
             @PathVariable(value = "id") UUID id,

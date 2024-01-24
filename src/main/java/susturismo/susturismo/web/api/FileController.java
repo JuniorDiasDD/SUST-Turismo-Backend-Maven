@@ -2,13 +2,16 @@ package susturismo.susturismo.web.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import susturismo.susturismo.domain.File;
 import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.service.FileService;
+import susturismo.susturismo.web.dto.FeedDTO;
 import susturismo.susturismo.web.dto.FileDTO;
 import susturismo.susturismo.web.dto.converter.FileDTOConverter;
+import susturismo.susturismo.web.dto.converter.responsesConverters.ResponseDTOConverter;
 import susturismo.susturismo.web.dto.webBody.requests.RequestDTO;
 import susturismo.susturismo.web.dto.webBody.responses.ResponseDTO;
 
@@ -19,6 +22,8 @@ public class FileController implements FileApi{
     FileService fileService;
 @Autowired
     FileDTOConverter fileDTOConverter;
+    @Autowired
+    ResponseDTOConverter responseDTOConverter;
     @Override
     public ResponseEntity<ResponseDTO<FileDTO>> insert(RequestDTO<FileDTO> request) {
 
@@ -31,6 +36,10 @@ public class FileController implements FileApi{
             throw new HttpInsertFailedException("Error to save");
         }
 
-        return ResponseEntity.ok().build();
+
+        response = responseDTOConverter.createResponse(request, null, "Sucess", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 }

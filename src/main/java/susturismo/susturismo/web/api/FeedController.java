@@ -86,7 +86,11 @@ public class FeedController implements FeedApi{
             throw new HttpInsertFailedException("Error to save");
         }
 
-        return ResponseEntity.ok().build();
+        FeedDTO dto= feedDTOConverter.convertToDTO(feedService.findById(feed.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Sucess", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
@@ -98,28 +102,38 @@ public class FeedController implements FeedApi{
             throw new HttpUpdateFailedException("Error to update");
         }
 
-        return ResponseEntity.ok().build();
+        FeedDTO dto= feedDTOConverter.convertToDTO(feedService.findById(value.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Sucess", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> active(RequestDTOList<UUID> request) {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<FeedDTO> response;
         request.getRequest().forEach(value->{
             if(feedService.updateStatus(value,"Active")){
                 throw new HttpUpdateFailedException("Error to active feed");
             }
         });
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Active", true);
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> disable(RequestDTOList<UUID> request) {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<FeedDTO> response;
         request.getRequest().forEach(value->{
             if(feedService.updateStatus(value,"Disable")){
                 throw new HttpUpdateFailedException("Error to disable feed");
             }
         });
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Disable", true);
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
@@ -154,7 +168,7 @@ public class FeedController implements FeedApi{
         }else{
             throw new HttpElementNotFoundExeption("Feed not exist by ID: "+id);
         }
-        response = responseDTOConverter.createResponse(request, dto, "Search By Id", true);
+        response = responseDTOConverter.createResponse(request, dto, "Success", true);
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 }

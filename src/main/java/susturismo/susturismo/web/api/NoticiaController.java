@@ -1,7 +1,6 @@
 package susturismo.susturismo.web.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import susturismo.susturismo.web.dto.webBody.requests.RequestDTO;
 import susturismo.susturismo.web.dto.webBody.requests.RequestDTOList;
 import susturismo.susturismo.web.dto.webBody.responses.ResponseDTO;
 import susturismo.susturismo.web.dto.webBody.responses.ResponseDTOList;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -111,6 +109,25 @@ public class NoticiaController implements NoticiaApi{
     }
 
     @Override
+    public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllApprove(RequestDTOList<NoticiaDTO> request) {
+        List<NoticiaDTO> dtoList;
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<NoticiaDTO> response;
+        List<Noticia> list = noticiaService.findAllStatus("Pendente");
+
+        dtoList = list.stream().map(noticiaDTOConverter::convertToDTO).collect(Collectors.toList());
+
+        headers.add("TotalElementCount", String.valueOf(list.size()));
+
+        if (dtoList.isEmpty()) {
+            throw new HttpElementNotFoundExeption("No Records of Noticias Active Where Found");
+        }
+        response = responseDTOConverter.createResponseWithList(request, dtoList, "All Records Of Noticias", true);
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<ResponseDTO<NoticiaDTO>> insert(RequestDTO<NoticiaDTO> request) {
         HttpHeaders headers = new HttpHeaders();
         ResponseDTO<NoticiaDTO> response;
@@ -121,7 +138,12 @@ public class NoticiaController implements NoticiaApi{
             throw new HttpInsertFailedException("Error to save");
         }
 
-        return ResponseEntity.ok().build();
+        NoticiaDTO dto= noticiaDTOConverter.convertToDTO(noticiaService.findById(noticia.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Search By Id", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+
     }
 
     @Override
@@ -135,39 +157,56 @@ public class NoticiaController implements NoticiaApi{
             throw new HttpUpdateFailedException("Error to update");
         }
 
-        return ResponseEntity.ok().build();
+        NoticiaDTO dto= noticiaDTOConverter.convertToDTO(noticiaService.findById(noticia.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Search By Id", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> active(RequestDTOList<UUID> request) {
+        ResponseDTOList<NoticiaDTO> response;
+        HttpHeaders headers = new HttpHeaders();
         request.getRequest().forEach(value->{
             if(noticiaService.updateStatus(value,"Active")){
                 throw new HttpUpdateFailedException("Error to active Noticia");
             }
         });
 
-        return ResponseEntity.ok().build();
+
+        response = responseDTOConverter.createResponseWithList(request, null, "Active", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
     @Override
-    public ResponseEntity<Object> approve(RequestDTOList<UUID> request) {
-        request.getRequest().forEach(value->{
-            if(noticiaService.updateStatus(value,"Active")){
-                throw new HttpUpdateFailedException("Error to approve Noticia");
-            }
-        });
+    public ResponseEntity<Object> approve(RequestDTO<NoticiaDTO> request) {
 
-        return ResponseEntity.ok().build();
+        ResponseDTO<NoticiaDTO> response;
+        HttpHeaders headers = new HttpHeaders();
+        UUID value=request.getRequest().getId();
+        if(noticiaService.updateStatus(value,"Active")){
+            throw new HttpUpdateFailedException("Error to approve Noticia");
+        }
+        response = responseDTOConverter.createResponse(request, null, "Approve", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Object> disable(RequestDTOList<UUID> request) {
-        request.getRequest().forEach(value->{
-            if(noticiaService.updateStatus(value,"Disable")){
-                throw new HttpUpdateFailedException("Error to disable noticia");
-            }
-        });
+    public ResponseEntity<Object> disable(RequestDTO<NoticiaDTO> request) {
+        ResponseDTO<NoticiaDTO> response;
+        HttpHeaders headers = new HttpHeaders();
+        UUID value=request.getRequest().getId();
+        if(noticiaService.updateStatus(value,"Disable")){
+            throw new HttpUpdateFailedException("Error to disable noticia");
+        }
+        response = responseDTOConverter.createResponse(request, null, "Disables", true);
 
-        return ResponseEntity.ok().build();
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
@@ -177,7 +216,7 @@ public class NoticiaController implements NoticiaApi{
         ResponseDTO<NoticiaDTO> response;
 
         Optional<Noticia> noticia = noticiaService.findById(id);
-        System.out.println(noticia.get().getSemelhantes().size());
+
         if (noticia.isPresent()) {
             dto = noticiaDTOConverter.convertToDTO(noticia.get());
 

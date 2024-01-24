@@ -6,6 +6,7 @@ import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.service.CategoryService;
 import susturismo.susturismo.web.dto.CategoryDTO;
+import susturismo.susturismo.web.dto.NoticiaDTO;
 import susturismo.susturismo.web.dto.converter.CategoryDTOConverter;
 import susturismo.susturismo.web.dto.converter.responsesConverters.ResponseDTOConverter;
 import susturismo.susturismo.web.dto.webBody.requests.RequestDTO;
@@ -63,45 +64,60 @@ public class CategoryController implements CategoryApi{
 
         }
 
-        return ResponseEntity.ok().build();
+        CategoryDTO dto=categoryDTOConverter.convertToDTO(categoryService.findByName(category.getName()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Success", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
 
     }
 
     @Override
-    public ResponseEntity<ResponseDTO<CategoryDTO>> updateCategory(RequestDTO<CategoryDTO> requestBody) {
+    public ResponseEntity<ResponseDTO<CategoryDTO>> updateCategory(RequestDTO<CategoryDTO> request) {
         HttpHeaders headers = new HttpHeaders();
         ResponseDTO<CategoryDTO> response;
 
-        Category category=categoryService.update(categoryDTOConverter.convertToEntity(requestBody.getRequest()));
+        Category category=categoryService.update(categoryDTOConverter.convertToEntity(request.getRequest()));
 
         if(category==null) {
             throw new HttpUpdateFailedException("Error to update");
         }
+        CategoryDTO dto=categoryDTOConverter.convertToDTO(categoryService.findByName(category.getName()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Success", true);
 
-        return ResponseEntity.ok().build();
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> disableCategory(RequestDTOList<UUID> request) {
-
+        ResponseDTOList<CategoryDTO> response;
+        HttpHeaders headers = new HttpHeaders();
         request.getRequest().forEach(value->{
             if(categoryService.updateStatus(value,"Disable")){
                 throw new HttpUpdateFailedException("UUID: "+value+" not exist");
             }
         });
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Active", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> activeCategory(RequestDTOList<UUID> request) {
-
+        ResponseDTOList<CategoryDTO> response;
+        HttpHeaders headers = new HttpHeaders();
         request.getRequest().forEach(value->{
             if(categoryService.updateStatus(value,"Active")){
                 throw new HttpUpdateFailedException("UUID: "+value+" not exist");
             }
         });
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Active", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 }

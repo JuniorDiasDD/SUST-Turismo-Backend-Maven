@@ -35,6 +35,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/api/v1/formation/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/formation").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/parceiro").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/parceiro/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/noticia/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/noticia").permitAll()
                         //.requestMatchers(HttpMethod.POST,"/events").hasRole("ADMIN")

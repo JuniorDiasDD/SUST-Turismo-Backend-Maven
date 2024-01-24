@@ -17,7 +17,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -92,6 +91,25 @@ public class EventController implements EventApi{
     }
 
     @Override
+    public ResponseEntity<ResponseDTOList<EventDTO>> findAllEventsApprove(RequestDTOList<EventDTO> request) {
+        List<EventDTO> dtoList;
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<EventDTO> response;
+        List<Event> list = eventService.findAllStatus("Pendente");
+
+        dtoList = list.stream().map(eventDTOConverter::convertToDTO).collect(Collectors.toList());
+
+        headers.add("TotalElementCount", String.valueOf(list.size()));
+
+        if (dtoList.isEmpty()) {
+            throw new HttpElementNotFoundExeption("No Records of Events Active Where Found");
+        }
+        response = responseDTOConverter.createResponseWithList(request, dtoList, "All Records Of Events", true);
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<ResponseDTOList<EventDTO>> findAllEventsActive(RequestDTOList<EventDTO> request) {
         List<EventDTO> dtoList;
         HttpHeaders headers = new HttpHeaders();
@@ -120,8 +138,11 @@ public class EventController implements EventApi{
         if(event==null) {
             throw new HttpInsertFailedException("Error to save");
         }
+        EventDTO dto= eventDTOConverter.convertToDTO(eventService.findById(event.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Sucess", true);
 
-        return ResponseEntity.ok().build();
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
@@ -135,38 +156,54 @@ public class EventController implements EventApi{
             throw new HttpUpdateFailedException("Error to update");
         }
 
-        return ResponseEntity.ok().build();
+        EventDTO dto= eventDTOConverter.convertToDTO(eventService.findById(event.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Sucess", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> activeEvent(RequestDTOList<UUID> request) {
+        ResponseDTOList<EventDTO> response;
+        HttpHeaders headers = new HttpHeaders();
         request.getRequest().forEach(value->{
             if(eventService.updateStatus(value,"Active")){
                 throw new HttpUpdateFailedException("Error to active event");
             }
         });
 
-        return ResponseEntity.ok().build();
-    }
-    public ResponseEntity<Object> approve(RequestDTOList<UUID> request) {
-        request.getRequest().forEach(value->{
-            if(eventService.updateStatus(value,"Active")){
-                throw new HttpUpdateFailedException("Error to approve event");
-            }
-        });
+        response = responseDTOConverter.createResponseWithList(request, null, "Active", true);
 
-        return ResponseEntity.ok().build();
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+    public ResponseEntity<Object> approve(RequestDTO<EventDTO> request) {
+        ResponseDTO<EventDTO> response;
+        HttpHeaders headers = new HttpHeaders();
+        UUID value=request.getRequest().getId();
+        if(eventService.updateStatus(value,"Active")){
+            throw new HttpUpdateFailedException("Error to approve event");
+        }
+        response = responseDTOConverter.createResponse(request, null, "Approve", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Object> disableEvent(RequestDTOList<UUID> request) {
-        request.getRequest().forEach(value->{
-            if(eventService.updateStatus(value,"Disable")){
-                throw new HttpUpdateFailedException("Error to disable event");
-            }
-        });
+    public ResponseEntity<Object> disableEvent(RequestDTO<EventDTO> request) {
+        ResponseDTO<EventDTO> response;
+        HttpHeaders headers = new HttpHeaders();
+        UUID value=request.getRequest().getId();
 
-        return ResponseEntity.ok().build();
+        if(eventService.updateStatus(value,"Disable")){
+            throw new HttpUpdateFailedException("Error to disable event");
+        }
+        response = responseDTOConverter.createResponse(request, null, "Disable", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override

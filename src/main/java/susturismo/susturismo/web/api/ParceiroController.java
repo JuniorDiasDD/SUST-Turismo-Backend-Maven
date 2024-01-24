@@ -82,7 +82,10 @@ public class ParceiroController implements ParceiroApi{
             throw new HttpInsertFailedException("Error to save");
         }
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponse(request, null, "Sucess", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
@@ -96,28 +99,41 @@ public class ParceiroController implements ParceiroApi{
             throw new HttpUpdateFailedException("Error to update");
         }
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponse(request, null, "Sucess", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> active(RequestDTOList<UUID> request) {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<ParceiroDTO> response;
         request.getRequest().forEach(value->{
             if(parceiroService.updateStatus(value,"Active")){
                 throw new HttpUpdateFailedException("Error to active parceiro");
             }
         });
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Ative", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> disable(RequestDTOList<UUID> request) {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<ParceiroDTO> response;
         request.getRequest().forEach(value->{
             if(parceiroService.updateStatus(value,"Disable")){
                 throw new HttpUpdateFailedException("Error to disable parceiro");
             }
         });
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Disable", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 }

@@ -20,12 +20,14 @@ public interface EventApi {
     public ResponseEntity<ResponseDTOList<EventDTO>> findAllLimit(@RequestBody(required = false) RequestDTOList<EventDTO> request);
     @GetMapping(path = "/my")
     public ResponseEntity<ResponseDTOList<EventDTO>> findAllByUser(@RequestBody(required = false) RequestDTOList<EventDTO> request);
-
+    @GetMapping(path = "/aprove")
+    public ResponseEntity<ResponseDTOList<EventDTO>> findAllEventsApprove(@RequestBody(required = false) RequestDTOList<EventDTO> request);
+    @GetMapping(path = "/{id}")
+    ResponseEntity<ResponseDTO<EventDTO>> findByID(
+            @PathVariable(value = "id") UUID eventId,
+            @RequestBody(required = false) RequestDTO<EventDTO> request);
     @GetMapping(path = "")
     public ResponseEntity<ResponseDTOList<EventDTO>> findAllEventsActive(@RequestBody(required = false) RequestDTOList<EventDTO> request);
-
-    @PostMapping(path = "")
-    ResponseEntity<ResponseDTO<EventDTO>> insertEvent(@RequestBody(required = false) @Valid RequestDTO<EventDTO> request);
 
     @PutMapping(path = "")
     ResponseEntity<ResponseDTO<EventDTO>> updateEvent(@RequestBody(required = false) RequestDTO<EventDTO> request);
@@ -33,12 +35,12 @@ public interface EventApi {
     @PostMapping(path = "/active")
     ResponseEntity<Object> activeEvent(@RequestBody(required = false) RequestDTOList<UUID> request);
     @PostMapping(path = "/approve")
-    ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTOList<UUID> request);
+    ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTO<EventDTO> request);
     @PostMapping(path = "/disable")
-    ResponseEntity<Object> disableEvent(@RequestBody(required = false) RequestDTOList<UUID> request);
+    ResponseEntity<Object> disableEvent(@RequestBody(required = false) RequestDTO<EventDTO> request);
+    @PostMapping(path = "")
+    ResponseEntity<ResponseDTO<EventDTO>> insertEvent(@RequestBody(required = false) @Valid RequestDTO<EventDTO> request);
 
-    @GetMapping(path = "/{id}")
-    ResponseEntity<ResponseDTO<EventDTO>> findByID(
-            @PathVariable(value = "id") UUID eventId,
-            @RequestBody(required = false) RequestDTO<EventDTO> request);
+
+
 }

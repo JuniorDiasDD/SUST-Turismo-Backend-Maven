@@ -30,6 +30,7 @@ public class AccountService {
         Optional<Account>optional= accountRepository.findByLogin(login);
         return optional.get().getId();
     }
+
     @Transactional
     public Account insert(Account account, String password, UserRole role,String googleId){
 
@@ -57,7 +58,7 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Account update(Account account){
+    public Account update(Account account,UserRole role){
 
         Optional<Account> optional=accountRepository.findById(account.getId());
         if(optional.isEmpty()){
@@ -85,6 +86,14 @@ public class AccountService {
             });
         }
 
+        if(role!=null){
+            Optional<User> userOptional=userRepository.findByUsername(optional.get().getLogin());
+            if(userOptional.isEmpty()){
+                throw new HttpElementNotFoundExeption("User name (login) is invalid");
+            }
+            userOptional.get().setRole(role);
+            userRepository.save(userOptional.get());
+        }
 
         return accountRepository.save(optional.get());
     }

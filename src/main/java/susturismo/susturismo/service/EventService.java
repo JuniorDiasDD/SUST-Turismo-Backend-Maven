@@ -214,18 +214,26 @@ public class EventService {
         Optional<Event> event= eventRepository.findById(id);
         Optional<Account>optional=accountRepository.findAccountByAuth(event.get().getCriadoPor());
         optional.ifPresent(event.get()::setAccount);
+        List<Galery> galeryList=galeryService.findAllByReference(id);
+        Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+        event.get().setGalery(galeryListString);
+
         if(event.get().getPrice()==null){
             event.get().setPrice((float) 0);
         }
         Set<Event> list=new HashSet<>();
-        event.get().getCategory().forEach(v->{
-            List<Event> eventList=eventRepository.findAllSemelhante("Active",v.getId(),id);
-            if(!eventList.isEmpty()){
-                list.addAll(eventList);
-            }
-        });
+        if(event.get().getCategory()!=null && !event.get().getCategory().isEmpty()){
+            event.get().getCategory().forEach(v->{
+                List<Event> eventList=eventRepository.findAllSemelhante("Active",v.getId(),id);
+                if(!eventList.isEmpty()){
+                    list.addAll(eventList);
+                }
+            });
+        }
 
-        event.get().setSemelhantes(list);
+            event.get().setSemelhantes(list);
+
+
         return event;
     }
 }

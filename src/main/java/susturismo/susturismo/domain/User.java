@@ -74,4 +74,8 @@ public class User implements UserDetails {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 }

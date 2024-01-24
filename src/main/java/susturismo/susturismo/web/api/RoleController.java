@@ -68,7 +68,10 @@ public class RoleController implements RoleApi{
             throw new HttpInsertFailedException("Error to save");
         }
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponse(request, null, "Success", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
@@ -85,23 +88,33 @@ public class RoleController implements RoleApi{
 
     @Override
     public ResponseEntity<Object> active(RequestDTOList<UUID> request) {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<RoleDTO> response;
         request.getRequest().forEach(value->{
             if(roleService.updateStatus(value,"Active")){
                 throw new HttpUpdateFailedException("Error to active Role");
             }
         });
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Ative", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> disable(RequestDTOList<UUID> request) {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<RoleDTO> response;
         request.getRequest().forEach(value->{
             if(roleService.updateStatus(value,"Disable")){
                 throw new HttpUpdateFailedException("Error to disable Role");
             }
         });
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Disable", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override

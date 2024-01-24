@@ -5,6 +5,7 @@ import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.service.PortfolioService;
+import susturismo.susturismo.web.dto.FeedDTO;
 import susturismo.susturismo.web.dto.PortfolioDTO;
 import susturismo.susturismo.web.dto.converter.PortfolioDTOConverter;
 import susturismo.susturismo.web.dto.converter.responsesConverters.ResponseDTOConverter;
@@ -64,7 +65,11 @@ public class PortfolioController implements PortfolioApi{
             throw new HttpInsertFailedException("Error to save");
         }
 
-        return ResponseEntity.ok().build();
+        PortfolioDTO dto= portfolioDTOConverter.convertToDTO(portfolioService.findById(value.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Sucess", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
@@ -76,40 +81,58 @@ public class PortfolioController implements PortfolioApi{
             throw new HttpUpdateFailedException("Error to update");
         }
 
-        return ResponseEntity.ok().build();
+        PortfolioDTO dto= portfolioDTOConverter.convertToDTO(portfolioService.findById(value.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Sucess", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> active(RequestDTOList<UUID> request) {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<PortfolioDTO> response;
         request.getRequest().forEach(value->{
             if(portfolioService.updateStatus(value,"Active")){
                 throw new HttpUpdateFailedException("Error to active Portfolio");
             }
         });
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Ative", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> disable(RequestDTOList<UUID> request) {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTOList<PortfolioDTO> response;
         request.getRequest().forEach(value->{
             if(portfolioService.updateStatus(value,"Disable")){
                 throw new HttpUpdateFailedException("Error to disable Portfolio");
             }
         });
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Disable", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> remove(RequestDTO<PortfolioDTO> request) {
-
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTO<PortfolioDTO> response;
         request.getRequest().getRoles().forEach(value->{
             if(!portfolioService.removeRole(request.getRequest().getId(),value.getId())){
                 throw new HttpUpdateFailedException("Error to disable Portfolio");
             }
         });
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponse(request, null, "Success", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override

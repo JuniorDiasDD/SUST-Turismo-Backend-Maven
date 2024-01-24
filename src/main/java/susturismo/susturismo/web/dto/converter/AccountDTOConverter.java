@@ -36,7 +36,24 @@ PortfolioDTOConverter portfolioDTOConverter;
 
         return accountDTO;
     }
+    public AccountDTO convertToDTOPerfil(Account account,String perfil) {
 
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.setLogin(account.getLogin());
+        accountDTO.setId(account.getId());
+        accountDTO.setEmail(account.getEmail());
+        accountDTO.setName(account.getName());
+        accountDTO.setStatus(account.getStatus());
+        accountDTO.setTel(account.getTel());
+        accountDTO.setGoogleId(account.getGoogle_id());
+        accountDTO.setPerfil(perfil);
+
+        Set<PortfolioDTO> portfolioDTOS = account.getPortfolios().stream().map(portfolioDTOConverter::convertToDTO).collect(Collectors.toSet());
+
+        accountDTO.setPortfolios(portfolioDTOS);
+
+        return accountDTO;
+    }
     public Account convertToEntity(AccountDTO accountDTO) {
 
         Account account = new Account();

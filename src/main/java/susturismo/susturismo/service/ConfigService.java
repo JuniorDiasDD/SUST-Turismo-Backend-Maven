@@ -105,7 +105,7 @@ public class ConfigService {
                 "Sandra Gonçalves Sales Manager – Pestana Trópico Hotel\n" +
                 "Pestana Tropico Hotel | www.pestana.com | www.pestanapriority.com\n" +
                 "Cidade da Praia C.P. 413, Santiago | Cabo Verde\n" +
-                "E-mail: sandra.goncalves@pestana.com | Tel: +238 261 42 00 | +238 957 86 99", "Universidades", specificInit,specificFinish, "09:00", "18:30", "ILHA DE SANTIAGO, Cabo Verde", "Active","formação", "/img/sobrenos1.png", (float) 0, categorySet));
+                "E-mail: sandra.goncalves@pestana.com | Tel: +238 261 42 00 | +238 957 86 99", "Universidades", specificInit,specificFinish, "09:00", "18:30", "ILHA DE SANTIAGO, Cabo Verde", "Active","formação", "../img/sobrenos1.png", (float) 0, categorySet));
 
         return true;
     }
@@ -322,14 +322,14 @@ public class ConfigService {
                 "\n" +
                 "O Presidente cabo-verdiano já tinha pedido um posicionamento do Tribunal de Contas e da Inspeção Geral das Finanças sobre a matéria,designadamente nas questões de legalidade, e anunciou que as regalias da companheira iam ser suspensas.\n" +
                 "\n" +
-                "José Maria Neves, antigo primeiro-ministro e eleito com o apoio do Partido Africano da Independência de Cabo Verde (PAICV, atualmente na oposição), anunciou ainda que, se for entendido que haverá algum montante a repor, \"será feito de imediato\".", "news", "/img/sobrenos1.png", data, "Active", categorySet) );
+                "José Maria Neves, antigo primeiro-ministro e eleito com o apoio do Partido Africano da Independência de Cabo Verde (PAICV, atualmente na oposição), anunciou ainda que, se for entendido que haverá algum montante a repor, \"será feito de imediato\".", "news", "../img/sobrenos1.png", data, "Active", categorySet) );
         noticiaService.insert(new Noticia("Preços dos combustíveis descem 4,49% em Cabo Verde", "noticia", " preço do gasóleo desce 4,95% para 123 escudos cabo-verdianos (cerca de 1,12 euros) o litro e a gasolina 4,28% para 132 escudos, de acordo com a nova tabela dos preços dos produtos petrolíferos regulados, já a vigorar.\n" +
                 "\n" +
                 "A ARME indicou ainda que o preço do gás butano é a excepção e sobe, com um aumento de 0,97%.\n" +
                 "\n" +
                 "Com isso, as garrafas de gás de 12,5 quilos passam a custar 1.814 escudos (cerca de 16,45 euros).\n" +
                 "\n" +
-                "Comparativamente ao período homólogo (janeiro de 2023), a variação média dos preços dos combustíveis corresponde a uma descida de 7,84%.", "combustivel", "/img/sobrenos1.png", data, "Active", categorySet) );
+                "Comparativamente ao período homólogo (janeiro de 2023), a variação média dos preços dos combustíveis corresponde a uma descida de 7,84%.", "combustivel", "../img/sobrenos1.png", data, "Active", categorySet) );
 
         noticiaService.insert(new Noticia("Cabo Verde. Hospital vai receber 27 mil euros/ano das obrigações verdes", "noticia", "nualmente será depositado na conta do Hospital Universitário Agostinho Neto (HUAN) um montante de cerca de 3,05 milhões de escudos (27,67 mil euros), o que perfaz cerca de 9,16 milhões de escudos (83,05 mil euros) tendo em conta que a maturidade do empréstimo é de três anos\", afirmou o presidente da Bolsa de Valores de Cabo Verde (BVC), Miguel Monteiro.\n" +
                 "\n" +
@@ -357,7 +357,7 @@ public class ConfigService {
                 "\n" +
                 "O banco apresenta-se como o terceiro maior de Cabo Verde, é liderado pelo grupo iib do Bahrain e participado em 10% pelo português Novo Banco.\n" +
                 "\n" +
-                "A última oferta pública de subscrição de obrigações na BVC ocorreu em janeiro de 2014, tendo como emitente a Imobiliária, Fundiária e Habitat (IFH, empresa estatal).", "Saude", "/img/sobrenos1.png", data, "Active", categorySet) );
+                "A última oferta pública de subscrição de obrigações na BVC ocorreu em janeiro de 2014, tendo como emitente a Imobiliária, Fundiária e Habitat (IFH, empresa estatal).", "Saude", "../img/sobrenos1.png", data, "Active", categorySet) );
 
 
         return true;

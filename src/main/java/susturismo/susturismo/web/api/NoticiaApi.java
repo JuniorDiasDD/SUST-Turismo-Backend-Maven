@@ -21,28 +21,27 @@ public interface NoticiaApi {
     public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllLimit(@RequestBody(required = false) RequestDTOList<NoticiaDTO> request);
     @GetMapping(path = "/my")
     public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllByUser(@RequestBody(required = false) RequestDTOList<NoticiaDTO> request);
-
     @GetMapping(path = "")
     public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllActive(@RequestBody(required = false) RequestDTOList<NoticiaDTO> request);
-
-    @PostMapping(path = "")
-    ResponseEntity<ResponseDTO<NoticiaDTO>> insert(@RequestBody(required = false) @Valid RequestDTO<NoticiaDTO> request);
-
-    @PutMapping(path = "")
-    ResponseEntity<ResponseDTO<NoticiaDTO>> update(@RequestBody(required = false) RequestDTO<NoticiaDTO> request);
-
-    @PostMapping(path = "/active")
-    ResponseEntity<Object> active(@RequestBody(required = false) RequestDTOList<UUID> request);
-
-    @PostMapping(path = "/approve")
-    ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTOList<UUID> request);
-    @PostMapping(path = "/disable")
-    ResponseEntity<Object> disable(@RequestBody(required = false) RequestDTOList<UUID> request);
-
+    @GetMapping(path = "/aprove")
+    public ResponseEntity<ResponseDTOList<NoticiaDTO>> findAllApprove(@RequestBody(required = false) RequestDTOList<NoticiaDTO> request);
     @GetMapping(path = "/{id}")
     ResponseEntity<ResponseDTO<NoticiaDTO>> findByID(
             @PathVariable(value = "id") UUID id,
             @RequestBody(required = false) RequestDTO<NoticiaDTO> request);
+
+    @PostMapping(path = "")
+    ResponseEntity<ResponseDTO<NoticiaDTO>> insert(@RequestBody(required = false) @Valid RequestDTO<NoticiaDTO> request);
+    @PostMapping(path = "/active")
+    ResponseEntity<Object> active(@RequestBody(required = false) RequestDTOList<UUID> request);
+    @PostMapping(path = "/approve")
+    ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTO<NoticiaDTO> request);
+    @PostMapping(path = "/disable")
+    ResponseEntity<Object> disable(@RequestBody(required = false) RequestDTO<NoticiaDTO> request);
+
+    @PutMapping(path = "")
+    ResponseEntity<ResponseDTO<NoticiaDTO>> update(@RequestBody(required = false) RequestDTO<NoticiaDTO> request);
+
     @DeleteMapping(path = "/{id}")
     ResponseEntity<ResponseDTO<NoticiaDTO>> delete(
             @PathVariable(value = "id") UUID id,

@@ -180,18 +180,22 @@ public class NoticiaService {
 
         Optional<Account>optional=accountRepository.findAccountByAuth(noticia.get().getCriadoPor());
         optional.ifPresent(noticia.get()::setAccount);
+        List<Galery> galeryList=galeryService.findAllByReference(id);
+        Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
+        noticia.get().setGalery(galeryListString);
 
         Set<Noticia> list=new HashSet<>();
-        noticia.get().getCategory().forEach(v->{
+        if(noticia.get().getCategory()!=null && !noticia.get().getCategory().isEmpty()){
+            noticia.get().getCategory().forEach(v->{
                 List<Noticia> noticiaList=noticiaRepository.findAllSemelhante("Active",v.getId(),id);
                 if(!noticiaList.isEmpty()){
                     list.addAll(noticiaList);
                 }
-        });
+            });
+        }
+
 
         noticia.get().setSemelhantes(list);
-
-
         return noticia;
     }
 

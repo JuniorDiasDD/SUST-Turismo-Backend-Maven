@@ -1,12 +1,11 @@
 package susturismo.susturismo.web.api;
 
-import susturismo.susturismo.domain.Event;
+
 import susturismo.susturismo.domain.Formation;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.exeption.exeptions.HttpUpdateFailedException;
 import susturismo.susturismo.service.FormationService;
-import susturismo.susturismo.web.dto.EventDTO;
 import susturismo.susturismo.web.dto.FormationDTO;
 import susturismo.susturismo.web.dto.converter.FormationDTOConverter;
 import susturismo.susturismo.web.dto.converter.responsesConverters.ResponseDTOConverter;
@@ -85,7 +84,11 @@ public class FormationController implements FormationApi{
             throw new HttpInsertFailedException("Error to save");
         }
 
-        return ResponseEntity.ok().build();
+        FormationDTO dto= formationDTOConverter.convertToDTO(formationService.findById(value.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Sucess", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
@@ -96,38 +99,56 @@ public class FormationController implements FormationApi{
         if(value==null) {
             throw new HttpUpdateFailedException("Error to update");
         }
+        FormationDTO dto= formationDTOConverter.convertToDTO(formationService.findById(value.getId()).get());
+        response = responseDTOConverter.createResponse(request, dto, "Sucess", true);
 
-        return ResponseEntity.ok().build();
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> active(RequestDTOList<UUID> request) {
+        ResponseDTOList<FormationDTO> response;
+        HttpHeaders headers = new HttpHeaders();
         request.getRequest().forEach(value->{
             if(formationService.updateStatus(value,"Active")){
                 throw new HttpUpdateFailedException("Error to active Formation");
             }
         });
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Active", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
     @Override
     public ResponseEntity<Object> approve(RequestDTOList<UUID> request) {
+        ResponseDTOList<FormationDTO> response;
+        HttpHeaders headers = new HttpHeaders();
         request.getRequest().forEach(value->{
             if(formationService.updateStatus(value,"Active")){
                 throw new HttpUpdateFailedException("Error to approve Formation");
             }
         });
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Approve", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Object> disable(RequestDTOList<UUID> request) {
+        ResponseDTOList<FormationDTO> response;
+        HttpHeaders headers = new HttpHeaders();
         request.getRequest().forEach(value->{
             if(formationService.updateStatus(value,"Disable")){
                 throw new HttpUpdateFailedException("Error to disable Formation");
             }
         });
 
-        return ResponseEntity.ok().build();
+        response = responseDTOConverter.createResponseWithList(request, null, "Disable", true);
+
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override

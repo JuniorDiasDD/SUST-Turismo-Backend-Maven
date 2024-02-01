@@ -74,6 +74,18 @@ public class AccountService {
         if(account.getTel()!=null && !account.getTel().isEmpty()){
             optional.get().setTel(account.getTel());
         }
+        if(account.getImage()!=null && !account.getImage().isEmpty()){
+            optional.get().setImage(account.getImage());
+        }
+        if(account.getPais()!=null && !account.getPais().isEmpty()){
+            optional.get().setPais(account.getPais());
+        }
+        if(account.getUniversidade()!=null && !account.getUniversidade().isEmpty()){
+            optional.get().setUniversidade(account.getUniversidade());
+        }
+        if(account.getDescription()!=null && !account.getDescription().isEmpty()){
+            optional.get().setDescription(account.getDescription());
+        }
         if(account.getPortfolios()!=null && !account.getPortfolios().isEmpty()){
             account.getPortfolios().forEach(v->{
                 Optional<Portfolio> optionalPortfolio=portfolioRepository.findById(v.getId());

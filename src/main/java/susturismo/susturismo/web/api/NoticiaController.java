@@ -165,17 +165,14 @@ public class NoticiaController implements NoticiaApi{
     }
 
     @Override
-    public ResponseEntity<Object> active(RequestDTOList<UUID> request) {
-        ResponseDTOList<NoticiaDTO> response;
+    public ResponseEntity<Object> active(RequestDTO<NoticiaDTO> request) {
+        ResponseDTO<NoticiaDTO> response;
         HttpHeaders headers = new HttpHeaders();
-        request.getRequest().forEach(value->{
-            if(noticiaService.updateStatus(value,"Active")){
-                throw new HttpUpdateFailedException("Error to active Noticia");
-            }
-        });
-
-
-        response = responseDTOConverter.createResponseWithList(request, null, "Active", true);
+        UUID value=request.getRequest().getId();
+        if(noticiaService.updateStatus(value,"Active")){
+            throw new HttpUpdateFailedException("Error to active Noticia");
+        }
+        response = responseDTOConverter.createResponse(request, null, "Active", true);
 
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);

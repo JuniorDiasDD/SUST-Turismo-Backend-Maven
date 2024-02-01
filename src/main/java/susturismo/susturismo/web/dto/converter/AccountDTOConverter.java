@@ -25,10 +25,14 @@ PortfolioDTOConverter portfolioDTOConverter;
         accountDTO.setLogin(account.getLogin());
         accountDTO.setId(account.getId());
         accountDTO.setEmail(account.getEmail());
+        accountDTO.setDescription(account.getDescription());
+        accountDTO.setImage(account.getImage());
         accountDTO.setName(account.getName());
         accountDTO.setStatus(account.getStatus());
         accountDTO.setTel(account.getTel());
         accountDTO.setGoogleId(account.getGoogle_id());
+        accountDTO.setPais(account.getPais());
+        accountDTO.setUniversidade(account.getUniversidade());
 
         Set<PortfolioDTO> portfolioDTOS = account.getPortfolios().stream().map(portfolioDTOConverter::convertToDTO).collect(Collectors.toSet());
 
@@ -41,12 +45,16 @@ PortfolioDTOConverter portfolioDTOConverter;
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setLogin(account.getLogin());
         accountDTO.setId(account.getId());
+        accountDTO.setImage(account.getImage());
+        accountDTO.setDescription(account.getDescription());
         accountDTO.setEmail(account.getEmail());
         accountDTO.setName(account.getName());
         accountDTO.setStatus(account.getStatus());
         accountDTO.setTel(account.getTel());
         accountDTO.setGoogleId(account.getGoogle_id());
         accountDTO.setPerfil(perfil);
+        accountDTO.setPais(account.getPais());
+        accountDTO.setUniversidade(account.getUniversidade());
 
         Set<PortfolioDTO> portfolioDTOS = account.getPortfolios().stream().map(portfolioDTOConverter::convertToDTO).collect(Collectors.toSet());
 
@@ -58,11 +66,15 @@ PortfolioDTOConverter portfolioDTOConverter;
 
         Account account = new Account();
         account.setLogin(accountDTO.getLogin());
+        account.setDescription(accountDTO.getDescription());
         account.setId(accountDTO.getId());
+        account.setImage(accountDTO.getImage());
         account.setEmail(accountDTO.getEmail());
         account.setName(accountDTO.getName());
         account.setStatus(accountDTO.getStatus());
         account.setTel(accountDTO.getTel());
+        account.setPais(accountDTO.getPais());
+        account.setUniversidade(accountDTO.getUniversidade());
         if(accountDTO.getPortfolios()!=null &&!accountDTO.getPortfolios().isEmpty()){
             Set<Portfolio> portfolios = accountDTO.getPortfolios().stream().map(portfolioDTOConverter::convertToEntity).collect(Collectors.toSet());
             account.setPortfolios(portfolios);

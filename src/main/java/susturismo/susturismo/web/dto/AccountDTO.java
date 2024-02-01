@@ -14,6 +14,10 @@ public class AccountDTO implements DTO{
     private String tel;
     private String email;
     private String status;
+    private String image;
+    private String description;
+    private String pais;
+    private String universidade;
     Set<PortfolioDTO> portfolios;
     private String googleId;
     private String perfil;
@@ -104,5 +108,37 @@ public class AccountDTO implements DTO{
 
     public void setGoogleId(String googleId) {
         this.googleId = googleId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getUniversidade() {
+        return universidade;
+    }
+
+    public void setUniversidade(String universidade) {
+        this.universidade = universidade;
     }
 }

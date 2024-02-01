@@ -107,45 +107,47 @@ public class FormationController implements FormationApi{
     }
 
     @Override
-    public ResponseEntity<Object> active(RequestDTOList<UUID> request) {
-        ResponseDTOList<FormationDTO> response;
+    public ResponseEntity<Object> active(RequestDTO<FormationDTO> request) {
+        ResponseDTO<FormationDTO> response;
         HttpHeaders headers = new HttpHeaders();
-        request.getRequest().forEach(value->{
-            if(formationService.updateStatus(value,"Active")){
-                throw new HttpUpdateFailedException("Error to active Formation");
-            }
-        });
-        response = responseDTOConverter.createResponseWithList(request, null, "Active", true);
+
+        if(formationService.updateStatus(request.getRequest().getId(), "Active")){
+            throw new HttpUpdateFailedException("Error to disable Formation");
+        }
+
+
+        response = responseDTOConverter.createResponse(request, null, "Disable", true);
 
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
     @Override
-    public ResponseEntity<Object> approve(RequestDTOList<UUID> request) {
-        ResponseDTOList<FormationDTO> response;
+    public ResponseEntity<Object> approve(RequestDTO<FormationDTO> request) {
+        ResponseDTO<FormationDTO> response;
         HttpHeaders headers = new HttpHeaders();
-        request.getRequest().forEach(value->{
-            if(formationService.updateStatus(value,"Active")){
-                throw new HttpUpdateFailedException("Error to approve Formation");
-            }
-        });
-        response = responseDTOConverter.createResponseWithList(request, null, "Approve", true);
+
+        if(formationService.updateStatus(request.getRequest().getId(), "Active")){
+            throw new HttpUpdateFailedException("Error to approve Formation");
+        }
+
+
+        response = responseDTOConverter.createResponse(request, null, "Approve", true);
 
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Object> disable(RequestDTOList<UUID> request) {
-        ResponseDTOList<FormationDTO> response;
+    public ResponseEntity<Object> disable(RequestDTO<FormationDTO> request) {
+        ResponseDTO<FormationDTO> response;
         HttpHeaders headers = new HttpHeaders();
-        request.getRequest().forEach(value->{
-            if(formationService.updateStatus(value,"Disable")){
+
+            if(formationService.updateStatus(request.getRequest().getId(), "Disable")){
                 throw new HttpUpdateFailedException("Error to disable Formation");
             }
-        });
 
-        response = responseDTOConverter.createResponseWithList(request, null, "Disable", true);
+
+        response = responseDTOConverter.createResponse(request, null, "Disable", true);
 
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);

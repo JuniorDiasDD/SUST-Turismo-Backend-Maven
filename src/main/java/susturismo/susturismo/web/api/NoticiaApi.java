@@ -33,7 +33,7 @@ public interface NoticiaApi {
     @PostMapping(path = "")
     ResponseEntity<ResponseDTO<NoticiaDTO>> insert(@RequestBody(required = false) @Valid RequestDTO<NoticiaDTO> request);
     @PostMapping(path = "/active")
-    ResponseEntity<Object> active(@RequestBody(required = false) RequestDTOList<UUID> request);
+    ResponseEntity<Object> active(@RequestBody(required = false) RequestDTO<NoticiaDTO> request);
     @PostMapping(path = "/approve")
     ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTO<NoticiaDTO> request);
     @PostMapping(path = "/disable")

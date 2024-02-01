@@ -16,10 +16,10 @@ import java.util.UUID;
 public interface ParceiroApi {
 
     @GetMapping(path = "/all")
-    public ResponseEntity<ResponseDTOList<ParceiroDTO>> findAllParceiro(@RequestBody(required = false) RequestDTOList<ParceiroDTO> request);
+    ResponseEntity<ResponseDTOList<ParceiroDTO>> findAllParceiro(@RequestBody(required = false) RequestDTOList<ParceiroDTO> request);
 
     @GetMapping(path = "")
-    public ResponseEntity<ResponseDTOList<ParceiroDTO>> findAllParceiroActive(@RequestBody(required = false) RequestDTOList<ParceiroDTO> request);
+    ResponseEntity<ResponseDTOList<ParceiroDTO>> findAllParceiroActive(@RequestBody(required = false) RequestDTOList<ParceiroDTO> request);
 
     @PostMapping(path = "")
     ResponseEntity<ResponseDTO<ParceiroDTO>> insert(@RequestBody(required = false) @Valid RequestDTO<ParceiroDTO> request);

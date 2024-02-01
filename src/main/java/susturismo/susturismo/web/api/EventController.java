@@ -164,16 +164,15 @@ public class EventController implements EventApi{
     }
 
     @Override
-    public ResponseEntity<Object> activeEvent(RequestDTOList<UUID> request) {
-        ResponseDTOList<EventDTO> response;
+    public ResponseEntity<Object> activeEvent(RequestDTO<EventDTO> request) {
+        ResponseDTO<EventDTO> response;
         HttpHeaders headers = new HttpHeaders();
-        request.getRequest().forEach(value->{
-            if(eventService.updateStatus(value,"Active")){
-                throw new HttpUpdateFailedException("Error to active event");
-            }
-        });
+        UUID value=request.getRequest().getId();
 
-        response = responseDTOConverter.createResponseWithList(request, null, "Active", true);
+        if(eventService.updateStatus(value,"Active")){
+            throw new HttpUpdateFailedException("Error to ative event");
+        }
+        response = responseDTOConverter.createResponse(request, null, "Disable", true);
 
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);

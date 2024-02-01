@@ -53,7 +53,7 @@ public class DocumentService {
     }
     public Document edit(Document document) {
 
-        if(document.getId()!=null){
+        if(document.getId()==null){
             throw new HttpElementNotFoundExeption("Not send id document");
         }
         Optional<Document> optionalDocument=documentRepository.findById(document.getId());

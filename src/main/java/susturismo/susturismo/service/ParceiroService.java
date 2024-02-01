@@ -84,4 +84,9 @@ public class ParceiroService {
 
     }
 
+    public boolean delete(UUID id){
+        parceiroRepository.deleteById(id);
+        return parceiroRepository.findById(id).isPresent();
+    }
+
 }

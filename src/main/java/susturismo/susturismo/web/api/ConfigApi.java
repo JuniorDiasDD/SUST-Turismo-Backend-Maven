@@ -11,10 +11,16 @@ public interface ConfigApi {
     ResponseEntity<Object> gerarCategory();
     @GetMapping(path = "/parceiro")
     ResponseEntity<Object> gerarParceiro();
+    @DeleteMapping(path = "/parceiro")
+    ResponseEntity<Object> deleteParceiro();
     @GetMapping(path = "/formation")
     ResponseEntity<Object> gerarFormation();
     @GetMapping(path = "/events")
     ResponseEntity<Object> gerarEvents();
+    @GetMapping(path = "/universidade")
+    ResponseEntity<Object> gerarUniversidade();
+    @GetMapping(path = "/pais")
+    ResponseEntity<Object> gerarPais();
     @GetMapping(path = "/noticia")
     ResponseEntity<Object> gerarNoticia();
     @GetMapping(path = "/equipa")

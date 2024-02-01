@@ -28,11 +28,11 @@ public interface FormationApi {
     ResponseEntity<ResponseDTO<FormationDTO>> update(@RequestBody(required = false) RequestDTO<FormationDTO> request);
 
     @PostMapping(path = "/active")
-    ResponseEntity<Object> active(@RequestBody(required = false) RequestDTOList<UUID> request);
+    ResponseEntity<Object> active(@RequestBody(required = false) RequestDTO<FormationDTO> request);
     @PostMapping(path = "/approve")
-    ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTOList<UUID> request);
+    ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTO<FormationDTO> request);
     @PostMapping(path = "/disable")
-    ResponseEntity<Object> disable(@RequestBody(required = false) RequestDTOList<UUID> request);
+    ResponseEntity<Object> disable(@RequestBody(required = false) RequestDTO<FormationDTO> request);
 
     @GetMapping(path = "/{id}")
     ResponseEntity<ResponseDTO<FormationDTO>> findByID(

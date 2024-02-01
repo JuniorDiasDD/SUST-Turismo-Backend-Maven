@@ -21,6 +21,15 @@ public class Account{
     @Column(name = "LOGIN", length = 64)
     private String login;
 
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
+    private String description;
+    @Column(name = "IMAGE", columnDefinition = "TEXT")
+    private String image;
+    @Column(name = "PAIS", columnDefinition = "TEXT")
+    private String pais;
+    @Column(name = "UNIVERSIDADE", columnDefinition = "TEXT")
+    private String universidade;
+
     @Column(name = "EMAIL", length = 254)
     private String email;
 
@@ -115,5 +124,37 @@ public class Account{
 
     public void setGoogle_id(String google_id) {
         this.google_id = google_id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getUniversidade() {
+        return universidade;
+    }
+
+    public void setUniversidade(String universidade) {
+        this.universidade = universidade;
     }
 }

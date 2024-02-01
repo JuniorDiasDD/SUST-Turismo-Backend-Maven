@@ -33,7 +33,7 @@ public interface EventApi {
     ResponseEntity<ResponseDTO<EventDTO>> updateEvent(@RequestBody(required = false) RequestDTO<EventDTO> request);
 
     @PostMapping(path = "/active")
-    ResponseEntity<Object> activeEvent(@RequestBody(required = false) RequestDTOList<UUID> request);
+    ResponseEntity<Object> activeEvent(@RequestBody(required = false) RequestDTO<EventDTO> request);
     @PostMapping(path = "/approve")
     ResponseEntity<Object> approve(@RequestBody(required = false) RequestDTO<EventDTO> request);
     @PostMapping(path = "/disable")

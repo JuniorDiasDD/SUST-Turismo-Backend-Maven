@@ -24,6 +24,8 @@ public class ConfigService {
     EventService eventService;
     @Autowired
     EquipaService equipaService;
+    @Autowired
+    ReferenceDataService referenceDataService;
 
     public boolean gerarCategory(){
         categoryService.insert(new Category("Desporto","..."));
@@ -35,6 +37,82 @@ public class ConfigService {
         categoryService.insert(new Category("Noticia","..."));
         return true;
     }
+
+    public boolean gerarPais(){
+
+        referenceDataService.insertPais(new Pais("Portugal","...",""));
+        referenceDataService.insertPais(new Pais("África do Su","...",""));
+        referenceDataService.insertPais(new Pais("Angola","...",""));
+        referenceDataService.insertPais(new Pais("Argélia","...",""));
+        referenceDataService.insertPais(new Pais("Benim","...",""));
+        referenceDataService.insertPais(new Pais("Botswana","...",""));
+        referenceDataService.insertPais(new Pais("Burquina Faso","...",""));
+        referenceDataService.insertPais(new Pais("Burundi","...",""));
+        referenceDataService.insertPais(new Pais("Camarões","...",""));
+        referenceDataService.insertPais(new Pais("Chade","...",""));
+        referenceDataService.insertPais(new Pais("Costa do Marfim","...",""));
+        referenceDataService.insertPais(new Pais("Djibouti","...",""));
+        referenceDataService.insertPais(new Pais("Egito","...",""));
+        referenceDataService.insertPais(new Pais("Eritreia","...",""));
+        referenceDataService.insertPais(new Pais("Etiópia","...",""));
+        referenceDataService.insertPais(new Pais("Gabão","...",""));
+        referenceDataService.insertPais(new Pais("Gâmbia","...",""));
+        referenceDataService.insertPais(new Pais("Gana","...",""));
+        referenceDataService.insertPais(new Pais("Guiné","...",""));
+        referenceDataService.insertPais(new Pais("Guiné-Bissau","...",""));
+        referenceDataService.insertPais(new Pais("Guiné Equatorial ","...",""));
+        referenceDataService.insertPais(new Pais("Ilhas de Madagascar","...",""));
+        referenceDataService.insertPais(new Pais("Cabo Verde","...",""));
+        referenceDataService.insertPais(new Pais("Comores ","...",""));
+        referenceDataService.insertPais(new Pais("São Tomé e Príncipe","...",""));
+        referenceDataService.insertPais(new Pais("Ilhas Seychelles","...",""));
+        referenceDataService.insertPais(new Pais("Lesoto","...",""));
+        referenceDataService.insertPais(new Pais("Libéria","...",""));
+        referenceDataService.insertPais(new Pais("Líbia","...",""));
+        referenceDataService.insertPais(new Pais("Malawi","...",""));
+        referenceDataService.insertPais(new Pais("Mali","...",""));
+        referenceDataService.insertPais(new Pais("Marrocos","...",""));
+        referenceDataService.insertPais(new Pais("Mauritânia","...",""));
+        referenceDataService.insertPais(new Pais("Moçambique","...",""));
+        referenceDataService.insertPais(new Pais("Namíbia","...",""));
+        referenceDataService.insertPais(new Pais("Níger","...",""));
+        referenceDataService.insertPais(new Pais("Nigéria  ","...",""));
+        referenceDataService.insertPais(new Pais("Quênia  ","...",""));
+        referenceDataService.insertPais(new Pais("República Centro-Africana ","...",""));
+        referenceDataService.insertPais(new Pais("República Democrática do Congo ","...",""));
+        referenceDataService.insertPais(new Pais("República do Congo ","...",""));
+        referenceDataService.insertPais(new Pais("República de Maurício ","...",""));
+        referenceDataService.insertPais(new Pais("Ruanda","...",""));
+        referenceDataService.insertPais(new Pais("Senegal","...",""));
+        referenceDataService.insertPais(new Pais("Serra Leoa","...",""));
+        referenceDataService.insertPais(new Pais("Somália","...",""));
+        referenceDataService.insertPais(new Pais("Eswatini","...",""));
+        referenceDataService.insertPais(new Pais("Sudão","...",""));
+        referenceDataService.insertPais(new Pais("Sudão do Sul","...",""));
+        referenceDataService.insertPais(new Pais("Tanzânia","...",""));
+        referenceDataService.insertPais(new Pais("Togo","...",""));
+        referenceDataService.insertPais(new Pais("Tunísia","...",""));
+        referenceDataService.insertPais(new Pais("Uganda","...",""));
+        referenceDataService.insertPais(new Pais("Zâmbia","...",""));
+        referenceDataService.insertPais(new Pais("Zimbábue","...",""));
+
+
+
+        return true;
+    }
+    public boolean gerarUniversidades(){
+        referenceDataService.insertUniversidade(new Universidade("UniPiaget de Cabo Verde","...",""));
+        referenceDataService.insertUniversidade(new Universidade("ISCEE","...",""));
+        referenceDataService.insertUniversidade(new Universidade("ESCP","...",""));
+        referenceDataService.insertUniversidade(new Universidade("iPVC","...",""));
+        referenceDataService.insertUniversidade(new Universidade("I.S.P","...",""));
+        referenceDataService.insertUniversidade(new Universidade("Universidade Santiago a Compostela","...",""));
+        referenceDataService.insertUniversidade(new Universidade("KOAN Consulting","...",""));
+        referenceDataService.insertUniversidade(new Universidade("UNINBE","...",""));
+        referenceDataService.insertUniversidade(new Universidade("Universidade Lusíadas de Benguela","...",""));
+
+        return true;
+    }
     public boolean gerarParceiro(){
         parceiroService.insert(new Parceiro("ISCEE",  "Universidade",   "https://www.susturismo.com/parceiros/ISCEE.png", "https://www.iscee.edu.cv/"));
         parceiroService.insert(new Parceiro("ESCP",  "ESCP Business School",   "https://www.susturismo.com/parceiros/ESCP.jpg", "https://escp.eu/"));
@@ -44,6 +122,8 @@ public class ConfigService {
         parceiroService.insert(new Parceiro("Obreal Global",  "Obreal Global",   "https://www.susturismo.com/parceiros/Obreal Global.jpg", "https://obreal.org/"));
         parceiroService.insert(new Parceiro("UNINBE",  "Universidade do NAMIBE",   "https://www.susturismo.com/parceiros/UNIMBE.png", "https://www.uninbe.ao/"));
         parceiroService.insert(new Parceiro("UniPiaget de Cabo Verde",  "Universidade Jean Piaget",   "https://www.susturismo.com/parceiros/UniPiaget.png", "https://www.unipiaget.edu.cv/"));
+        parceiroService.insert(new Parceiro("Universidade Lusíadas de Benguela",  "Universidade Lusíadas de Benguela",   "https://www.susturismo.com/parceiros/LusiadasBenguela.png", "http://www.isplusiadabenguela.ed.ao/"));
+        parceiroService.insert(new Parceiro("Universidade Santiago a Compostela",  "Universidade Santiago a Compostela ",   "https://www.susturismo.com/parceiros/SantiagoCompostela.png", "https://www.usc.gal/gl"));
 
         return true;
     }
@@ -364,5 +444,16 @@ public class ConfigService {
     }
     private UUID gerarUUID(){
         return UUID.randomUUID();
+    }
+
+
+    public boolean deleteParceiros(){
+        List<Parceiro> parceiros=parceiroService.findAll();
+
+        if(!parceiros.isEmpty()){
+           parceiros.forEach(e->parceiroService.delete(e.getId()));
+        }
+
+        return true;
     }
 }

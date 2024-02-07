@@ -146,7 +146,6 @@ public class FormationController implements FormationApi{
                 throw new HttpUpdateFailedException("Error to disable Formation");
             }
 
-
         response = responseDTOConverter.createResponse(request, null, "Disable", true);
 
 

@@ -26,7 +26,7 @@ public class ConfigController implements ConfigApi{
 
     @Override
     public ResponseEntity<Object> deleteParceiro() {
-        configService.deleteParceiros();
+
         configService.deleteParceiros();
         return ResponseEntity.ok().build();
     }
@@ -49,6 +49,24 @@ public class ConfigController implements ConfigApi{
         return ResponseEntity.ok().build();
     }
 
+    @Override
+    public ResponseEntity<Object> deleteUniversidade() {
+
+        configService.deleteUniversidade();
+        return ResponseEntity.ok().build();
+    }
+    @Override
+    public ResponseEntity<Object> deletePais() {
+
+        configService.deletePais();
+        return ResponseEntity.ok().build();
+    }
+    @Override
+    public ResponseEntity<Object> deletePasta() {
+
+        configService.deletePastas();
+        return ResponseEntity.ok().build();
+    }
     @Override
     public ResponseEntity<Object> gerarPais() {
         configService.gerarPais();

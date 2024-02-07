@@ -30,7 +30,14 @@ public class ReferenceDataService {
         return universidadeRepository.findAll();
     }
 
-
+    public boolean deleteUniversidade(UUID id){
+        universidadeRepository.deleteById(id);
+        return true;
+    }
+    public boolean deletePais(UUID id){
+        paisRepository.deleteById(id);
+        return true;
+    }
     public Pais insertPais(Pais objt){
 
         UUID uuid = UUID.randomUUID();

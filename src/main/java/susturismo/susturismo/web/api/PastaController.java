@@ -5,10 +5,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import susturismo.susturismo.domain.Noticia;
 import susturismo.susturismo.domain.Pasta;
 import susturismo.susturismo.exeption.exeptions.HttpElementNotFoundExeption;
 import susturismo.susturismo.exeption.exeptions.HttpInsertFailedException;
 import susturismo.susturismo.service.PastaService;
+import susturismo.susturismo.web.dto.NoticiaDTO;
 import susturismo.susturismo.web.dto.PastaDTO;
 import susturismo.susturismo.web.dto.converter.PastaDTOConverter;
 import susturismo.susturismo.web.dto.converter.responsesConverters.ResponseDTOConverter;
@@ -84,6 +86,27 @@ public class PastaController implements PastaApi{
             throw new HttpElementNotFoundExeption("Pasta not exist by ID: "+id);
         }
         response = responseDTOConverter.createResponse(request, dto, "Search By Id", true);
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseDTO<PastaDTO>> getById(UUID id, RequestDTO<PastaDTO> request) {
+        PastaDTO dto = null;
+        HttpHeaders headers = new HttpHeaders();
+        ResponseDTO<PastaDTO> response;
+
+        Optional<Pasta> pasta = pastaService.findById(id);
+
+        if (pasta.isPresent()) {
+            dto = pastaDTOConverter.convertToDTOFull(pasta.get());
+
+        }else{
+            throw new HttpElementNotFoundExeption("Pasta not exist by ID: "+id);
+        }
+
+        response = responseDTOConverter.createResponse(request, dto, "Search By Id", true);
+
+
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 

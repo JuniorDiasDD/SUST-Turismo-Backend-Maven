@@ -45,6 +45,11 @@ public class FormationService {
             }
         });
 
+
+        if(valueFormation.getImage()==null || valueFormation.getImage().isEmpty()){
+            valueFormation.setImage("../img/sobrenos1.png");
+        }
+
         valueFormation.setCategory(categorySet);
         String userName=SecurityContextHolder.getContext().getAuthentication().getName();
 

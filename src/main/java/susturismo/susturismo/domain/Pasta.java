@@ -21,6 +21,10 @@ public class Pasta extends BaseTable{
 
     @Column(name = "IMAGE", columnDefinition = "TEXT")
     private String image;
+
+    @Column(name = "POSITION",length = 6)
+    private Integer order;
+
     @Transient
     Account account;
     public Pasta() {
@@ -64,5 +68,13 @@ public class Pasta extends BaseTable{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 }

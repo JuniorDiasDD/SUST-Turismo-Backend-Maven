@@ -19,8 +19,14 @@ public interface ConfigApi {
     ResponseEntity<Object> gerarEvents();
     @GetMapping(path = "/universidade")
     ResponseEntity<Object> gerarUniversidade();
+    @DeleteMapping(path = "/universidade")
+    ResponseEntity<Object> deleteUniversidade();
     @GetMapping(path = "/pais")
     ResponseEntity<Object> gerarPais();
+    @DeleteMapping(path = "/pais")
+    ResponseEntity<Object> deletePais();
+    @DeleteMapping(path = "/pasta")
+    ResponseEntity<Object> deletePasta();
     @GetMapping(path = "/noticia")
     ResponseEntity<Object> gerarNoticia();
     @GetMapping(path = "/equipa")

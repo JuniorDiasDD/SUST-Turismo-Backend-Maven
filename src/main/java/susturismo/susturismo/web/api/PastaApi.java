@@ -25,6 +25,10 @@ public interface PastaApi {
     ResponseEntity<ResponseDTO<PastaDTO>> delete(
             @PathVariable(value = "id") UUID id,
             @RequestBody(required = false) RequestDTO<PastaDTO> request);
+    @GetMapping(path = "/{id}")
+    ResponseEntity<ResponseDTO<PastaDTO>> getById(
+            @PathVariable(value = "id") UUID id,
+            @RequestBody(required = false) RequestDTO<PastaDTO> request);
 
 
 }

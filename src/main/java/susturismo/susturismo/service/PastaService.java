@@ -42,8 +42,6 @@ public class PastaService {
             Optional<Account>optional=accountRepository.findAccountByAuth(pasta.get().getCriadoPor());
             optional.ifPresent(pasta.get()::setAccount);
 
-
-
         return pasta;
     }
     public boolean delete(UUID id){
@@ -91,6 +89,7 @@ public class PastaService {
         if(pasta.getLink()!=null && !pasta.getLink().isEmpty()){
             optional.get().setLink(pasta.getLink());
         }
+        optional.get().setOrder(pasta.getOrder());
         String userName= SecurityContextHolder.getContext().getAuthentication().getName();
 
         Optional<User> userOptional=userRepository.findByUsername(userName);
@@ -103,6 +102,9 @@ public class PastaService {
     }
 
 
-
+public boolean deleteAll(){
+       pastaRepository.deleteAll();
+       return true;
+}
 
 }

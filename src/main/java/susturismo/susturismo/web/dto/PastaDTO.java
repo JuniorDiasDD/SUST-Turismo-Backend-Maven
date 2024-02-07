@@ -8,6 +8,7 @@ public class PastaDTO implements DTO{
     private String name;
     private String link;
     private String image;
+    private int order;
     private AccountDTO account;
 
     public AccountDTO getAccount() {
@@ -48,5 +49,13 @@ public class PastaDTO implements DTO{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 }

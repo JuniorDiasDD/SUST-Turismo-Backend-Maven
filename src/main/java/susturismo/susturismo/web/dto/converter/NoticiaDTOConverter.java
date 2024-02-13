@@ -74,7 +74,7 @@ public class NoticiaDTOConverter {
             Set<CategoryDTO> categoryDTOS = noticia.getCategory().stream().map(categoryDTOConverter::convertToDTO).collect(Collectors.toSet());
             dto.setCategories(categoryDTOS);
         }
-        if(!noticia.getGalery().isEmpty()){
+        if(noticia.getGalery()!=null &&!noticia.getGalery().isEmpty()){
             dto.setGalery(noticia.getGalery());
         }
         return dto;
@@ -96,7 +96,7 @@ public class NoticiaDTOConverter {
             noticia.setCategory(categories);
         }
 
-        if(!dto.getGalery().isEmpty()){
+        if(dto.getGalery()!=null && !dto.getGalery().isEmpty()){
             noticia.setGalery(dto.getGalery());
         }
         return noticia;

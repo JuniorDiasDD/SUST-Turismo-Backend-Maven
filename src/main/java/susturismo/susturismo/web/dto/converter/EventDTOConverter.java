@@ -109,7 +109,7 @@ public class EventDTOConverter {
             event.setCategory(categories);
         }
 
-        if(!eventDTO.getGalery().isEmpty()){
+        if(eventDTO.getGalery()!=null && !eventDTO.getGalery().isEmpty()){
             event.setGalery(eventDTO.getGalery());
         }
 

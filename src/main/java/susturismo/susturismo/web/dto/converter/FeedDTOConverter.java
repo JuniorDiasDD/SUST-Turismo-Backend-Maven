@@ -36,7 +36,6 @@ public class FeedDTOConverter {
         Set<CommentFeedDTO> commentFeedDTOS = feed.getComments().stream().map(commentFeedDTOConverter::convertToDTO).collect(Collectors.toSet());
         dto.setComments(commentFeedDTOS);
         return dto;
-
     }
 
     public Feed convertToEntity(FeedDTO dto) {
@@ -48,7 +47,6 @@ public class FeedDTOConverter {
         objt.setImage(dto.getImage());
 
         return objt;
-
     }
 
 

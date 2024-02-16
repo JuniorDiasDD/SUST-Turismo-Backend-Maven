@@ -23,6 +23,8 @@ public interface AccountApi {
     ResponseEntity<Object> disable(@RequestBody(required = false) RequestDTO<AccountDTO> request);
     @PostMapping(path = "/remove")
     ResponseEntity<Object> remove(@RequestBody(required = false) RequestDTO<AccountDTO> request);
+    @DeleteMapping(path = "/remove")
+    ResponseEntity<Object> removeAccount(@RequestBody(required = false) RequestDTO<AccountDTO> request);
     @GetMapping(path = "/{id}")
     ResponseEntity<ResponseDTO<AccountDTO>> findByID(
             @PathVariable(value = "id") UUID eventId,

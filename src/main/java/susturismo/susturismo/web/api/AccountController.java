@@ -137,6 +137,22 @@ public class AccountController implements AccountApi {
     }
 
     @Override
+    public ResponseEntity<Object> removeAccount(RequestDTO<AccountDTO> request) {
+        ResponseDTO<AccountDTO> response;
+        HttpHeaders headers = new HttpHeaders();
+
+        boolean check =accountService.removeAccount(request.getRequest().getId());
+
+        if(!check){
+           throw new HttpElementNotFoundExeption("Error in delete");
+        }
+
+        response = responseDTOConverter.createResponse(request, null, "Remove sucess", true);
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<ResponseDTO<AccountDTO>> findByID(UUID id, RequestDTO<AccountDTO> request) {
         AccountDTO dto = null;
         HttpHeaders headers = new HttpHeaders();

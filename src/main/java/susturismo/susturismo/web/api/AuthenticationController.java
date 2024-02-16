@@ -90,7 +90,7 @@ public class AuthenticationController implements AuthenticationApi {
     @Override
     public ResponseEntity<Object> register(HttpServletRequest request, AccountDTO data, HttpHeaders headers) {
 
-        if(this.userRepository.findByLogin(data.getLogin())!=null) {
+        if(userRepository.findByLogin(data.getLogin())!=null) {
          throw new HttpInsertFailedException("Username exist");
         }
 

@@ -166,4 +166,18 @@ public class AccountService {
         }
         return true;
     }
+
+    public boolean removeAccount(UUID id){
+
+        Optional<Account> optionalAccount=accountRepository.findById(id);
+
+        if(optionalAccount.isPresent()){
+            Optional<User> userOptional=userRepository.findByUsername(optionalAccount.get().getLogin());
+            accountRepository.delete(optionalAccount.get());
+            userRepository.delete(userOptional.get());
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -69,7 +69,11 @@ public class NoticiaService {
         List<Noticia> list= noticiaRepository.findAllNoticiaStatus(status);
 
         list.forEach(v->{
+
             Optional<Account>optional=accountRepository.findAccountByAuth(v.getCriadoPor());
+            if(optional.isEmpty()){
+                throw new HttpElementNotFoundExeption("Erro interno com account");
+            }
             optional.ifPresent(v::setAccount);
             List<Galery> galeryList=galeryService.findAllByReference(v.getId());
             Set<String> galeryListString = galeryList.stream().map(Galery::getImage).collect(Collectors.toSet());
@@ -172,6 +176,15 @@ public class NoticiaService {
             throw new HttpElementNotFoundExeption("Not exist this Noticia");
         }
 
+
+    }
+    public boolean updateExtra(Noticia noticia){
+
+        Optional<Account> account=accountRepository.findByLogin("egm@cv.unipiaget.org");
+        noticia.setCriadoPor(account.get().getAuth());
+        noticia.setAlteradoPor(account.get().getAuth());
+        noticiaRepository.save(noticia);
+return true;
 
     }
 

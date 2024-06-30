@@ -95,7 +95,12 @@ public class NoticiaController implements NoticiaApi{
         HttpHeaders headers = new HttpHeaders();
         ResponseDTOList<NoticiaDTO> response;
         List<Noticia> list = noticiaService.findAllStatus("Active");
-
+        /*
+        resolver problema de account em noticia que estava null
+      list.forEach(v->{
+           noticiaService.updateExtra(v);
+       });
+      list = noticiaService.findAllStatus("Active");*/
         dtoList = list.stream().map(noticiaDTOConverter::convertToDTO).collect(Collectors.toList());
 
         headers.add("TotalElementCount", String.valueOf(list.size()));

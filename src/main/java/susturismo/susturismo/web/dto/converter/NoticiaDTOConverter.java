@@ -39,18 +39,17 @@ public class NoticiaDTOConverter {
             dto.setCategories(categoryDTOS);
         }
 
-
-
     if(!noticia.getSemelhantes().isEmpty()){
         Set<NoticiaDTO> noticiaDTOS = new HashSet<>();
                 noticia.getSemelhantes().forEach(v->{
                     noticiaDTOS.add(convertToDTOExtra(v));
                 });
         dto.setSemelhantes(noticiaDTOS);
-
     }
-        AccountDTO accountDTO=accountDTOConverter.convertToDTO(noticia.getAccount());
+    if(noticia.getAccount()!=null) {
+        AccountDTO accountDTO = accountDTOConverter.convertToDTO(noticia.getAccount());
         dto.setAccount(accountDTO);
+    }
         if(!noticia.getGalery().isEmpty()){
             dto.setGalery(noticia.getGalery());
         }
